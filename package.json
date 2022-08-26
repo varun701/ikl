@@ -1,0 +1,42 @@
+{
+  "name": "ikl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=16.9"
+  },
+  "scripts": {
+    "dev": "nodemon --loader ./utils/lib/alias-loader.js --no-warnings index.js",
+    "start": "node --loader ./utils/lib/alias-loader.js --no-warnings index.js",
+    "deploy": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/start/deploy-commands.js",
+    "dbInit": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/start/db-init.js",
+
+    "lint": "eslint \"./**/*.js\" --fix",
+    "lint:check": "eslint \"./**/*.js\"",
+    "pretty": "prettier --write \"./**/*.js\"",
+    "format": "npm run pretty && npm run lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@keyv/sqlite": "^3.5.3",
+    "chalk": "^5.0.1",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.1",
+    "esm-module-alias": "2.0.1",
+    "keyv": "^4.4.1",
+    "sequelize": "^6.21.4",
+    "sqlite3": "^5.0.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varun701/ikl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/varun701/ikl/issues"
+  },
+  "homepage": "https://github.com/varun701/ikl#readme"
+}
