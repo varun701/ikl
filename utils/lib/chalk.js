@@ -25,7 +25,11 @@ export default function printf(string, type = 'g', bg = 0) {
                         : string
 
   exportString =
-    bg === 1 ? Chalk.bgWhiteBright(exportString) : bg === 2 ? Chalk.bgBlackBright(exportString) : exportString
+    bg === 1
+      ? Chalk.bgWhiteBright(exportString)
+      : bg === 2
+        ? Chalk.bgBlackBright(exportString)
+        : exportString
   return console.log(exportString)
 }
 
