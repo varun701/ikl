@@ -7,11 +7,6 @@
 
 ### Setup
 
-After cloning this repo with below command
-```
-git clone htttps:\\github.com\varun701\ikl
-```
-
 Only if you are on `termux`, run below command first.
 ```
 npm install sqlite3 --build-from-source --sqlite=~/../usr/bin/sqlite3
@@ -28,7 +23,16 @@ CLIENTID={application id without parenthesis}
 GUILDID={testing server id without parenthesis}
 ```
 
-### Deploying Commands
+#### Database Init
+You can initialise database with below commands.
+It will create the sqlite database with members table.
+
+```
+mkdir database
+npm run dbInit
+```
+
+#### Deploying Commands
 Start with deploying commands  
 ```
 npm run deploy
@@ -41,16 +45,7 @@ If you want to use commands only in your test server, run below command instead.
 npm run deploy test
 ```
 
-#### Database Init
-You can initialise database with below commands.
-It will create the sqlite database with members table.
-
-```
-mkdir database
-npm run dbInit
-```
-
-#### Start bot
+### Start bot
 
 ```
 npm run start
