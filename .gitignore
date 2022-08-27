@@ -1,6 +1,6 @@
 # Private
 database/
-test.js
+utils/temp/
 
 .env
 .eslintrc
