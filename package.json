@@ -16,7 +16,8 @@
     "lint": "eslint \"./**/*.js\" --fix",
     "lint:check": "eslint \"./**/*.js\"",
     "pretty": "prettier --write \"./**/*.js\"",
-    "format": "npm run pretty && npm run lint"
+    "format": "npm run pretty && npm run lint",
+    "load": "node --loader ./utils/lib/alias-loader.js --no-warnings"
   },
   "keywords": [],
   "author": "",
