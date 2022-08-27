@@ -1,10 +1,11 @@
 import { Collection } from 'discord.js'
 import { commandsList } from '@core/list.js'
 
-export function commandHandlerInitial(client) {
+export async function commandHandlerInitial(client) {
   client.commands = new Collection()
-  for (const command of commandsList) {
+  for await (const command of commandsList) {
     client.commands.set(command.data.name, command.execute)
+    if (command.preExecute) await command.preExecute(client)
   }
   return
 }

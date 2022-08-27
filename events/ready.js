@@ -1,7 +1,8 @@
 import { info } from '@chalk'
 
-function execute(_client) {
+function execute(client) {
   info('Bot is online')
+  console.log(client.KeyVC)
 }
 
 export default {

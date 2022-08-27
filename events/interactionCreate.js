@@ -1,6 +1,4 @@
 import commandHandler from '@core/command-handler.js'
-import database from '@core/database-handler.js'
-import keyv from '@lib/keyv.js'
 
 async function execute(interaction) {
   try {
