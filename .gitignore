@@ -1,11 +1,15 @@
 # Private
-database/
+database/*
 utils/temp/
 
 .env
 .eslintrc
 .prettierrc
 .gitattributes
+
+# Include
+!database/models
+!database/keyv.env
 
 # Logs
 logs
