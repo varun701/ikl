@@ -1,19 +1,11 @@
-import { Client, GatewayIntentBits as botIntents } from 'discord.js'
+import { Client, Collection, GatewayIntentBits as Intents } from 'discord.js'
 import dotenv from 'dotenv'
 dotenv.config()
-globalThis.config = {}
+globalThis.bot = new Collection()
 
-const guildIntents = [botIntents.Guilds, botIntents.GuildMembers, botIntents.GuildBans]
-const guildMessageIntents = [
-  botIntents.GuildMessages,
-  botIntents.GuildMessageReactions,
-  botIntents.MessageContent,
-]
-const directMessageIntents = [botIntents.DirectMessages, botIntents.DirectMessageReactions]
+const intents = [Intents.Guilds, Intents.GuildMembers, Intents.GuildBans]
 
-const intents = [...guildIntents, ...guildMessageIntents, ...directMessageIntents]
-
-const client = new Client({ intents, partials: ['CHANNEL', 'MESSAGE'] })
+const client = new Client({ intents })
 
 import beforeLogin from '@core/before-login.js'
 await beforeLogin(client)
