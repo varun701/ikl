@@ -8,7 +8,7 @@ const aliases = {
 
   '@events': 'events',
   '@commands': 'commands',
-  '@chalk': 'utils/lib/chalk.js',
+  '@pino': 'utils/lib/pino.js',
 }
 
 export const resolve = generateAliasesResolver(aliases)

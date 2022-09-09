@@ -12,7 +12,6 @@
     "start": "node --loader ./utils/lib/alias-loader.js --no-warnings index.js",
     "deploy": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/start/deploy-commands.js",
     "dbInit": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/start/db-init.js",
-
     "lint": "eslint \"./**/*.js\" --fix",
     "lint:check": "eslint \"./**/*.js\"",
     "pretty": "prettier --write \"./**/*.js\"",
@@ -24,11 +23,13 @@
   "license": "MIT",
   "dependencies": {
     "@keyv/sqlite": "^3.5.3",
-    "chalk": "^5.0.1",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
     "esm-module-alias": "2.0.1",
+    "key-value-file": "^1.0.10",
     "keyv": "^4.4.1",
+    "pino": "^8.5.0",
+    "pino-pretty": "^9.1.0",
     "sequelize": "^6.21.4",
     "sqlite3": "^5.0.11"
   },
