@@ -1,4 +1,5 @@
 import commandHandler from '@core/command-handler.js'
+import logger from '@pino'
 
 async function execute(interaction) {
   try {
@@ -8,7 +9,7 @@ async function execute(interaction) {
     if (interaction.isModalSubmit()) await ifModalSubmit(interaction)
   }
   catch (err) {
-    console.error(err)
+    logger.error(err)
   }
 }
 

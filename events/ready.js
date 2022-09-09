@@ -1,8 +1,10 @@
-import { info } from '@chalk'
+import logger from '@pino'
 
-function execute(client) {
-  info('Bot is online')
-  console.log(client.KeyVC)
+function execute(_client) {
+  logger.info('Bot is online')
+
+  const timeStamp = Date.now()
+  bot.set('startedAt', timeStamp.toString())
 }
 
 export default {

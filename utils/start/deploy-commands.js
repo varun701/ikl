@@ -1,5 +1,6 @@
 import { Routes } from 'discord.js'
 import { REST } from '@discordjs/rest'
+import logger from '@pino'
 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -17,5 +18,5 @@ rest
   .put(commandScope, {
     body: commandBuilders,
   })
-  .then(() => console.log('Successfully registered application commands.'))
-  .catch(console.error)
+  .then(() => logger.info('Successfully registered application commands.'))
+  .catch(logger.error)
