@@ -1,83 +1,133 @@
-import { EmbedBuilder, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import {
+  // eslint-disable-next-line no-unused-vars
+  ChatInputCommandInteraction,
+  EmbedBuilder,
+  PermissionFlagsBits,
+  SlashCommandBuilder,
+} from 'discord.js'
+import logger from '@pino'
 
 const data = {
   name: 'verify',
 }
 
-async function execute(interaction) {
-  // MARK: Remove this and support config at start up
-  config.dCode = {
-    NEW_COUPLE_LOG_MSG: 'New couple have arrived!!',
-    NEW_VERIFIED_MEMBER_LOG_MSG: 'Welcome to verified only section of server!',
-    NEW_VERIFIED_PLUS_MEMBER_LOG_MSG: 'Congratulations! You are now verified plus member!',
-  }
+let dmMember, dmPlus, dmCouple
 
+/**
+ * @param {ChatInputCommandInteraction} interaction
+ * @returns void
+ */
+
+async function execute(interaction) {
+  await interaction.deferReply({ ephemeral: true })
+
+  // Determine action, content
   const subCommand = interaction.options.getSubcommand()
   const awardRoleID =
     subCommand === 'couple'
-      ? interaction.client.KeyVC.get('ROLE_COUPLE')
+      ? interaction.client.keyv.get('ROLE_COUPLE')
       : subCommand === 'member'
-        ? interaction.client.KeyVC.get('ROLE_VERIFIED')
-        : interaction.client.KeyVC.get('ROLE_VERIFIED_PLUS')
+        ? interaction.client.keyv.get('ROLE_VERIFIED')
+        : interaction.client.keyv.get('ROLE_VERIFIED_PLUS')
 
   let messageContent =
     subCommand === 'couple'
-      ? config.dCode.NEW_COUPLE_LOG_MSG
+      ? bot.keyv.log_msg_new_couple
       : subCommand === 'member'
-        ? config.dCode.NEW_VERIFIED_MEMBER_LOG_MSG
-        : config.dCode.NEW_VERIFIED_PLUS_MEMBER_LOG_MSG
+        ? bot.keyv.log_msg_new_verified_member
+        : bot.keyv.log_msg_new_verified_plus
 
-  const targetUser = await interaction.options.getUser('member')
-  const targetMember = await interaction.guild.members.fetch(targetUser)
-  await targetMember.roles.add(awardRoleID)
-  const targetMemberEmbed = generateSimpleInfo(targetMember, interaction.user)
+  const personalMessage =
+    subCommand === 'couple' ? dmCouple : subCommand === 'member' ? dmMember : dmPlus
+
+  // target, add role
+  const targetUser = interaction.options.getUser('member')
+  const target = await interaction.guild.members.fetch(targetUser)
+  await target.roles.add(awardRoleID)
+
+  // target, embed
+  const targetMemberEmbed = generateVerificationDetails(target, interaction.user)
   const embedsToSend = [targetMemberEmbed]
-  messageContent = messageContent.concat(`  <@${targetUser.id}>`)
+  messageContent = messageContent.concat(`  <@${target.id}>`)
 
+  // partner, add role
+  let targetPartnerUser
   if (subCommand === 'couple') {
-    const targetUserPartner = await interaction.options.getUser('partner')
-    const targetMemberPartner = await interaction.guild.members.fetch(targetUserPartner)
-    await targetMemberPartner.roles.add(awardRoleID)
-    const targetMemberPartnerEmbed = generateSimpleInfo(targetMemberPartner, interaction.user)
+    targetPartnerUser = interaction.options.getUser('partner')
+    const targetPartner = await interaction.guild.members.fetch(targetPartnerUser)
+    await targetPartner.roles.add(awardRoleID)
+
+    // partner, embed
+    const targetMemberPartnerEmbed = generateVerificationDetails(targetPartner, interaction.user)
     embedsToSend.push(targetMemberPartnerEmbed)
-    messageContent = messageContent.concat(`  <@${targetUserPartner.id}>`)
+    messageContent = messageContent.concat(`  <@${targetPartner.id}>`)
   }
 
-  const generalLogChannelID =
+  // log messages
+  const logChannelID =
     subCommand === 'couple'
-      ? interaction.client.KeyVC.get('CHANNEL_VERIFICATION_LOGS_COUPLE')
+      ? interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_COUPLE')
       : subCommand === 'member'
-        ? interaction.client.KeyVC.get('CHANNEL_VERIFICATION_LOGS_MEMBER')
-        : interaction.client.KeyVC.get('CHANNEL_VERIFICATION_LOGS_PLUS')
-  const generalLogChannel = await interaction.client.channels.fetch(generalLogChannelID)
-  await generalLogChannel.send({
+        ? interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_MEMBER')
+        : interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_PLUS')
+  const logChannel = await interaction.client.channels.fetch(logChannelID)
+  await logChannel.send({
     content: messageContent,
     embeds: embedsToSend,
   })
 
-  const modLogChannelID = interaction.client.KeyVC.get('CHANNEL_VERIFICATION_LOGS_MODS')
+  // mod log messages
+  const modLogChannelID = interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_MODS')
   const modLogChannel = await interaction.client.channels.fetch(modLogChannelID)
   await modLogChannel.send({
-    content: subCommand,
+    content: subCommand, // name of subcommand, different thn log
     embeds: embedsToSend,
   })
 
-  await interaction.reply({
+  // edit reply, done
+  await interaction.editReply({
     content: 'Done',
     ephemeral: true,
   })
-  return
+
+  // dm message
+  const dms = await target.createDM()
+  if (dms) await dms.send({ embeds: [personalMessage] })
+  if (targetPartnerUser) {
+    const dmsPartner = await targetPartnerUser.createDM()
+    if (dmsPartner) await dmsPartner.send({ embeds: [personalMessage] })
+  }
+  logger.info('Verify command executed, subcommand:', subCommand)
 }
 
-function generateSimpleInfo(target, user) {
+/**
+ * This function generates verification details embed to be sent in log and modlog channel
+ * @param {GuildMember} target the member to be verified
+ * @param {GuildMember} user the moderator
+ * @returns void
+ */
+function generateVerificationDetails(target, user) {
   return new EmbedBuilder()
     .setTitle(target.displayName)
     .setDescription(`${target.user.tag}\n\n**Moderator**\n<@${user.id}>`)
     .setThumbnail(target.displayAvatarURL())
 }
 
+/**
+ * This function generates the embeds to be used in personal notice message
+ * @param {Client} _client
+ */
+
 async function preExecute(_client) {
-  return
+  dmMember = new EmbedBuilder()
+    .setTitle('Verified Member')
+    .setDescription(bot.keyv.personal_msg_new_member)
+  dmPlus = new EmbedBuilder()
+    .setTitle('Verified Plus Member')
+    .setDescription(bot.keyv.personal_msg_new_plus)
+  dmCouple = new EmbedBuilder()
+    .setTitle('Verified Couple')
+    .setDescription(bot.keyv.personal_msg_new_couple)
 }
 
 const builder = new SlashCommandBuilder()
