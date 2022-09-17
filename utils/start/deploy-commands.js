@@ -19,4 +19,4 @@ rest
     body: commandBuilders,
   })
   .then(() => logger.info('Successfully registered application commands.'))
-  .catch(logger.error)
+  .catch((error) => logger.error`${error}`)

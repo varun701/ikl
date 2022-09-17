@@ -21,7 +21,7 @@ dm:
 
 verified:
   1: verified
-  2: verified irl
+  2: verified plus
   0: not verified
 
 intro:

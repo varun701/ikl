@@ -5,7 +5,14 @@ import { Collection } from 'discord.js'
 import logger from '../lib/pino.js'
 
 import membersModel from '@root/database/models/members.js'
+import { keyValueConvertor } from '../lib/keyv.js'
 export const membersDB = await membersModel(sequelize, Sequelize.DataTypes)
+
+/**
+ * Creates client.keyv collection from database/keyv.sqlite
+ * * Called in botInitial
+ * @param {Client} client
+ */
 
 const keyvcInitial = async (client) => {
   client.keyv = new Collection()
@@ -30,27 +37,25 @@ const keyvcInitial = async (client) => {
   logger.info('Client.keyv loaded')
 }
 
+/**
+ * Creates bot.keyv global object from keyv.env
+ * * Calls keyvcInitial to create client.keyv
+ * @param {Client} client
+ * @returns void
+ */
+
 export const botInitial = async (client) => {
-  bot.keyv = {
-    async set(key, value) {
-      const valueCorrected = value.replaceAll('\\n', '\n')
-      const keyvSet = keyvEnv.set(key, value)
-      await keyvSet.writeFile()
-      this[key] = valueCorrected
-    },
-    async delete(key) {
-      delete bot.keyv[key]
-      const keyvDelete = keyvEnv.delete(key)
-      await keyvDelete.writeFile()
-    },
-    async initial() {
-      const keys = keyvEnv._tokens.filter((tok) => tok.type === 1).map((tok) => tok.value)
-      for (const key of keys) {
-        this[key] = keyvEnv.get(key).replaceAll('\\n', '\n')
-      }
-    },
+  bot.keyv = {}
+
+  const keys = keyvEnv._tokens.filter((tok) => tok.type === 1).map((tok) => tok.value)
+
+  for (const key of keys) {
+    const rawValue = keyvEnv.get(key)
+
+    const converted = keyValueConvertor(key, rawValue)
+    bot.keyv[converted[0]] = converted[1]
   }
-  await bot.keyv.initial()
+  console.log(bot.keyv) // mark: remove this when commit
   logger.info('Bot.keyv loaded')
   await keyvcInitial(client)
   return

@@ -1,6 +1,11 @@
 import { eventsList } from '@core/list.js'
 
-export default function(client) {
+/**
+ * This function configures client events exported from list.js
+ * @param {Client} client
+ */
+
+export default function eventHandler(client) {
   for (const event of eventsList) {
     if (event.once) {
       client.once(event.name, (...args) => event.execute(...args))
