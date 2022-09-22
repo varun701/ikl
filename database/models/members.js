@@ -24,9 +24,13 @@ verified:
   2: verified plus
   0: not verified
 
-intro:
-  1: intro given
-  0: no intro
+profile:
+  1: has profile
+  0: no profile
+
+kinks:
+  1: kinks added
+  0: not added
 
 isMember:
   1: current member
@@ -57,7 +61,11 @@ export default (sequelize, dataTypes) =>
         type: dataTypes.INTEGER(1),
         allowNull: false,
       },
-      intro: {
+      profile: {
+        type: dataTypes.INTEGER(1),
+        allowNull: false,
+      },
+      kinks: {
         type: dataTypes.INTEGER(1),
         allowNull: false,
       },

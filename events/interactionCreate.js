@@ -1,4 +1,4 @@
-import commandHandler from '@core/command-handler.js'
+import commandHandler from '@utils/modules/core/command-handler.js'
 import logger from '@pino'
 
 async function execute(interaction) {

@@ -84,20 +84,33 @@ async function execute(interaction) {
     embeds: embedsToSend,
   })
 
+  // dm message
+  let msg = 'Done'
+  try {
+    const dms = await target.createDM()
+    if (dms) await dms.send({ embeds: [personalMessage] })
+    msg = msg.concat('\nDM message sent')
+    msg = msg.concat('\nDM message sent')
+  }
+  catch (e) {
+    msg = msg.concat('\nCan not send dm message', target.id)
+  }
+  try {
+    if (targetPartnerUser) {
+      const dmsPartner = await targetPartnerUser.createDM()
+      if (dmsPartner) await dmsPartner.send({ embeds: [personalMessage] })
+    }
+  }
+  catch (e) {
+    msg = msg.concat('\nCan not send dm message', targetPartnerUser.id)
+  }
+
   // edit reply, done
   await interaction.editReply({
-    content: 'Done',
+    content: msg,
     ephemeral: true,
   })
-
-  // dm message
-  const dms = await target.createDM()
-  if (dms) await dms.send({ embeds: [personalMessage] })
-  if (targetPartnerUser) {
-    const dmsPartner = await targetPartnerUser.createDM()
-    if (dmsPartner) await dmsPartner.send({ embeds: [personalMessage] })
-  }
-  logger.info('Verify command executed, subcommand:', subCommand)
+  logger.info(`Verify command executed, subcommand: ${subCommand}`)
 }
 
 /**

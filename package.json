@@ -1,6 +1,6 @@
 {
   "name": "ikl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "nodemon --loader ./utils/lib/alias-loader.js --no-warnings index.js",
     "start": "node --loader ./utils/lib/alias-loader.js --no-warnings index.js",
-    "deploy": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/start/deploy-commands.js",
-    "dbInit": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/start/db-init.js",
+    "deploy": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/modules/core/deploy-commands.js",
+    "dbInit": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/modules/core/db-init.js",
     "lint": "eslint \"./**/*.js\" --fix",
     "lint:check": "eslint \"./**/*.js\"",
     "pretty": "prettier --write \"./**/*.js\"",
@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "@keyv/sqlite": "^3.5.3",
+    "common-tags": "^1.8.2",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
     "esm-module-alias": "2.0.1",
@@ -30,6 +31,7 @@
     "keyv": "^4.4.1",
     "pino": "^8.5.0",
     "pino-pretty": "^9.1.0",
+    "puppeteer": "^18.0.5",
     "sequelize": "^6.21.4",
     "sqlite3": "^5.0.11"
   },

@@ -1,0 +1,139 @@
+* {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+  outline: 0px;
+  font-family: poppins;
+  font-size: 48px;
+  text-transform: lowercase;
+  letter-spacing: 0px;
+  color: white;
+}
+
+body {
+  /* background-color: #36393f; */
+}
+
+.profileWrapper {
+  width: 1200px;
+  height: 1200px;
+  position: absolute;
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.element {
+  position: relative;
+  margin-left: 80px;
+  margin-right: 80px;
+  width: 1040px;
+}
+
+.type1 {
+  opacity: 0.6;
+  line-height: normal;
+}
+
+#userProfile {
+  display: flex;
+}
+
+#userProfileImage {
+  margin-top: 68px;
+  width: 340px;
+  height: 340px;
+  border-radius: 28px;
+  background-color: blueviolet;
+}
+
+#userProfileDetails {
+  margin-left: 100px;
+  width: 640px;
+}
+
+#userTag {
+  padding-top: 20px;
+  text-align: end;
+}
+
+#userName {
+  padding-top: 40px;
+  color: #00ffff;
+  font-size: 64px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 6px;
+}
+
+#userQuote {
+  padding-top: 20px;
+  font-size: 56px;
+  font-weight: 400;
+  max-width: 640px;
+  line-height: 60px;
+}
+
+#userDetails {
+  margin-top: 72px;
+  margin-bottom: 68px;
+}
+
+#userInfo {
+  position: relative;
+  line-height: 80px;
+  display: flex;
+}
+
+#userInfo1 {
+  width: 400px;
+}
+
+#userInfo2 {
+  width: 640px;
+  text-align: end;
+}
+
+#divider {
+  position: relative;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  height: 36px;
+  border-radius: 14px;
+  background-image: linear-gradient(to right, #00ffffff, #00ffff00);
+}
+
+#userAsl {
+  position: relative;
+  display: flex;
+  line-height: 88px;
+}
+
+#aslTitles {
+  width: 280px;
+}
+
+#aslDetails {
+  width: 760px;
+}
+
+#footer {
+  position: relative;
+  display: flex;
+}
+
+#footer > div {
+  width: 520px;
+}
+
+#footer > div > p {
+  text-transform: none;
+}
+
+#ikl {
+  text-align: right;
+}

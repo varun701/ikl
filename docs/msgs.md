@@ -5,13 +5,19 @@
 ### Log msg
 
 Couple
-> New couple have arrived!!
+```
+New couple have arrived!!
+```
 
 Member
-> Welcome to verified only section of server!
+```
+Welcome to verified only section of server!
+```
 
 Plus
-> You are now verified plus!
+```
+You are now verified plus!
+```
 
 ### Personal msg
 

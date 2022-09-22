@@ -1,6 +1,6 @@
-import eventHandler from '@core/event-handler.js'
-import { commandHandlerInitial } from '@core/command-handler.js'
-import { botInitial } from '@core/database-handler.js'
+import eventHandler from './event-handler.js'
+import { commandHandlerInitial } from './command-handler.js'
+import { botInitial } from './database-handler.js'
 import logger from '@pino'
 
 /**
@@ -9,10 +9,10 @@ import logger from '@pino'
  * @returns void
  */
 
-export default async function(client) {
+export async function preLogin(client) {
   try {
     await botInitial(client) // script for client.keyv(keyv.sqlite), bot.keyv(key.env), sqlite databases
-    await eventHandler(client)
+    eventHandler(client)
     await commandHandlerInitial(client)
   }
   catch (e) {

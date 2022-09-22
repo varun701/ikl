@@ -1,11 +1,11 @@
 import Sequelize from 'sequelize'
-import sequelize from '@lib/sequelize.js'
-import { keyv, keyvEnv } from '@lib/keyv.js'
+import sequelize from '../../lib/sequelize.js'
+import { keyv, keyvEnv } from '../../lib/keyv.js'
 import { Collection } from 'discord.js'
-import logger from '../lib/pino.js'
+import logger from '../../lib/pino.js'
 
 import membersModel from '@root/database/models/members.js'
-import { keyValueConvertor } from '../lib/keyv.js'
+import { keyValueConvertor } from '../../lib/keyv.js'
 export const membersDB = await membersModel(sequelize, Sequelize.DataTypes)
 
 /**
@@ -55,7 +55,6 @@ export const botInitial = async (client) => {
     const converted = keyValueConvertor(key, rawValue)
     bot.keyv[converted[0]] = converted[1]
   }
-  console.log(bot.keyv) // mark: remove this when commit
   logger.info('Bot.keyv loaded')
   await keyvcInitial(client)
   return
