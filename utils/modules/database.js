@@ -1,12 +1,17 @@
 import Sequelize from 'sequelize'
-import sequelize from '../../lib/sequelize.js'
-import { keyv, keyvEnv } from '../../lib/keyv.js'
+import sequelize from '../lib/sequelize.js'
+import { keyv, keyvEnv } from '../lib/keyv.js'
 import { Collection } from 'discord.js'
-import logger from '../../lib/pino.js'
+import logger from '../lib/pino.js'
 
-import membersModel from '@root/database/models/members.js'
-import { keyValueConvertor } from '../../lib/keyv.js'
+import membersModel from '../../database/models/members.js'
 export const membersDB = await membersModel(sequelize, Sequelize.DataTypes)
+
+import { profilesModel } from '../../database/models/profiles.js'
+export const profilesDB = await profilesModel(sequelize, Sequelize.DataTypes)
+
+// * Keyv
+import { keyValueConvertor } from '../lib/keyv.js'
 
 /**
  * Creates client.keyv collection from database/keyv.sqlite
@@ -62,4 +67,5 @@ export const botInitial = async (client) => {
 
 export default {
   membersDB,
+  profilesDB,
 }

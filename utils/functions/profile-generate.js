@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+import path from 'path'
+import url from 'url'
 import puppeteer from 'puppeteer'
 import { profileManager } from '../modules.js'
 
@@ -9,7 +11,8 @@ import { profileManager } from '../modules.js'
 
 export async function profileGenerate(dataObj) {
   // launch browser
-  const url = 'file:///E:/Projects/ikl/assets/web/main.html'
+  const webPath = path.resolve('assets', 'web', 'main.html')
+  const webUrl = url.pathToFileURL(webPath)
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-gpu'],
@@ -18,14 +21,14 @@ export async function profileGenerate(dataObj) {
   // open page
   const page = await browser.newPage()
   await page.setViewport({ width: 1200, height: 1200 })
-  await page.goto(url, {
+  await page.goto(webUrl, {
     timeout: 0,
     waitUntil: 'networkidle0',
   })
 
   // edit details
   await page.evaluate((data) => {
-    const nope = ['color', 'pfp', 'grd', 'bg', 'intro', 'channel']
+    const nope = ['color', 'pfp', 'grd', 'bg', 'intro', 'channel', 'ifProfile']
     for (const value in data) {
       if (nope.includes(value)) continue
       document.getElementById(value).innerHTML = data[value]

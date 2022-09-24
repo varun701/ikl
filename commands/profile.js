@@ -1,6 +1,7 @@
 import {
   ActionRowBuilder,
   ModalBuilder,
+  PermissionFlagsBits,
   SelectMenuBuilder,
   SlashCommandBuilder,
   TextInputBuilder,
@@ -203,6 +204,7 @@ async function preExecute() {
  */
 
 async function execute(interaction) {
+  await interaction.deferReply({ ephemeral: true })
   const subCommand = interaction.options.getSubcommand()
   const executeFn =
     subCommand === 'create'
@@ -214,23 +216,30 @@ async function execute(interaction) {
           : 'none'
 
   if (subCommand !== 'create' || executeFn === 'none') {
-    await interaction.reply({
+    await interaction.editReply({
       content: 'This command is not available yet.',
-      ephemeral: true,
     })
     return
   }
 
-  await executeFn(interaction)
+  const member = await interaction.guild.members.fetch(interaction.user)
+  const dataObj = await profileDetails(member)
+
+  if (dataObj.ifProfile) {
+    await interaction.editReply({
+      content: 'You have already created profile.',
+    })
+    return
+  }
+  await executeFn(interaction, dataObj)
 }
 
 /**
  * @param {ChatInputCommandInteraction} interaction
+ * @param {Object} dataObj
  */
 
-async function executeCreate(interaction) {
-  await interaction.deferReply({ ephemeral: true })
-  const dataObj = {}
+async function executeCreate(interaction, dataObj) {
   dataObj.userName = interaction.options.getString('name', true)
   dataObj.age = interaction.options.getNumber('age', true)
 
@@ -301,10 +310,11 @@ async function executeCreate(interaction) {
         dataObj.intro.aboutMe = modalSubmit.fields.getTextInputValue('aboutMe')
         dataObj.intro.lookingFor = modalSubmit.fields.getTextInputValue('lookingFor')
         dataObj.intro.interests = modalSubmit.fields.getTextInputValue('interests')
+        dataObj.intro.locationWhole = `${cityName} | ${stateSelected} | ${zoneSelected}`
 
+        await profileGenerate(dataObj)
         const member = await interaction.guild.members.fetch(interaction.user)
-        const returned = await profileDetails(member)
-        await profileGenerate({ ...dataObj, ...returned })
+        await member.roles.add(interaction.client.keyv.get('ROLE_PROFILE'))
       })
     })
   })
@@ -394,6 +404,8 @@ const builder = new SlashCommandBuilder()
   )
   .addSubcommand((subCommand) => subCommand.setName('edit').setDescription('Edit your profile'))
   .addSubcommand((subCommand) => subCommand.setName('delete').setDescription('Delete your profile'))
+  .setDMPermission(false)
+  .setDefaultMemberPermissions(PermissionFlagsBits.ViewChannel)
 
 export default {
   data,

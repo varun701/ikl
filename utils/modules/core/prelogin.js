@@ -1,6 +1,6 @@
 import eventHandler from './event-handler.js'
 import { commandHandlerInitial } from './command-handler.js'
-import { botInitial } from './database-handler.js'
+import { botInitial } from '../database.js'
 import logger from '@pino'
 
 /**
