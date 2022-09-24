@@ -12,6 +12,7 @@ export async function profileDetails(targetMember) {
   details.userTag = targetMember.user.tag
   details.userId = targetMember.user.id
   details.pfp = targetMember.displayAvatarURL()
+  details.color = targetMember.displayHexColor
   details.verification_status = verificationLevel(targetMember)
 
   const list = ['gender', 'sexuality', 'dm_status', 'level_status']
