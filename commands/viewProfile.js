@@ -42,7 +42,7 @@ async function execute(interaction) {
 }
 
 const builder = new ContextMenuCommandBuilder()
-  .setName('Show Profile')
+  .setName('View Profile')
   .setType(ApplicationCommandType.User)
   .setDMPermission(false)
 
