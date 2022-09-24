@@ -231,6 +231,17 @@ async function execute(interaction) {
     })
     return
   }
+
+  if (
+    dataObj.sexuality === 'human' ||
+    dataObj.dm_status === 'human' ||
+    dataObj.gender === 'human'
+  ) {
+    await interaction.editReply({
+      content: 'Your profile does not have necessary roles. e.g. sexuality/dm status role.',
+    })
+    return
+  }
   await executeFn(interaction, dataObj)
 }
 

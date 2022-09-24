@@ -5,7 +5,7 @@ export const profileManager = new EventEmitter()
 
 profileManager.on('created', async (imgBuff, dataObj) => {
   const img = new AttachmentBuilder(imgBuff)
-  const embed = new EmbedBuilder().setTitle(dataObj.userTag)
+  const embed = new EmbedBuilder().setTitle(dataObj.userTag).setColor('#2f3136')
 
   if (dataObj.intro.lookingFor !== '') {
     embed.addFields({ name: 'Looking For', value: dataObj.intro.lookingFor })
@@ -41,4 +41,10 @@ async function addToDatabase(dataObj) {
     msgUrl: dataObj.profileMsgUrl,
   })
   return
+}
+
+export async function getFromDatabase(id) {
+  const profile = await profilesDB.findByPk(id)
+
+  return profile
 }
