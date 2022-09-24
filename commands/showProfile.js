@@ -10,7 +10,7 @@ import {
 import { getFromDatabase } from '../utils/modules/profile-manager.js'
 
 const data = {
-  name: 'Show Profile',
+  name: 'View Profile',
 }
 
 /**
@@ -23,7 +23,7 @@ async function execute(interaction) {
   const profile = await getFromDatabase(targetUser.id)
 
   if (profile === null) {
-    await interaction.editReply({
+    await interaction.reply({
       content: 'The target user does not have profile.',
       ephemeral: true,
     })
@@ -34,7 +34,7 @@ async function execute(interaction) {
     new ButtonBuilder().setLabel('Full Profile').setStyle(ButtonStyle.Link).setURL(profile.msgUrl),
   )
 
-  await interaction.editReply({
+  await interaction.reply({
     content: profile.imgUrl,
     components: [actionRow],
     ephemeral: true,
