@@ -276,14 +276,14 @@ async function executeCreate(interaction, dataObj) {
 
     // select menu, states
     const message2 = await zonesInteraction.editReply({
-      content: 'Select state',
+      content: 'Select state/region',
       components: [stateSelectMenuRows[zoneSelected]],
     })
 
     await selectMenuCollectorr(message2, async (err, statesInteraction) => {
       if (err) {
         await zonesInteraction.editReply({
-          content: 'You did not select state. Command canceled.',
+          content: 'You did not select state/region. Command canceled.',
           components: [],
         })
         return
