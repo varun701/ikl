@@ -5,19 +5,31 @@ export const profileManager = new EventEmitter()
 
 profileManager.on('created', async (imgBuff, dataObj) => {
   const img = new AttachmentBuilder(imgBuff)
-  const embed = new EmbedBuilder().setTitle(dataObj.userTag).setColor('#2f3136')
+  const intro = dataObj.intro
+  const embeds = []
 
-  if (dataObj.intro.lookingFor !== '') {
-    embed.addFields({ name: 'Looking For', value: dataObj.intro.lookingFor })
+  if (intro.lookingFor !== '' || intro.lookingFor === null) {
+    embeds.push(new EmbedBuilder()
+      .setTitle('Looking for')
+      .setDescription(intro.lookingFor)
+      .setColor('#2f3136'))
   }
-  if (dataObj.intro.interests !== '') {
-    embed.addFields({ name: 'Interests', value: dataObj.intro.interests })
+
+  if (intro.interests !== '' || intro.interests === null) {
+    embeds.push(new EmbedBuilder()
+      .setTitle('Interests')
+      .setDescription(intro.interests)
+      .setColor('#2f3136'))
   }
-  if (dataObj.intro.aboutMe !== '') {
-    embed.addFields({ name: 'About Me', value: dataObj.intro.aboutMe })
+
+  if (intro.aboutMe !== '' || intro.aboutMe === null) {
+    embeds.push(new EmbedBuilder()
+      .setTitle('About Me')
+      .setDescription(intro.aboutMe)
+      .setColor('#2f3136'))
   }
   const profile = await dataObj.channel.send({
-    embeds: [embed],
+    embeds,
     files: [img],
   })
   dataObj.profileImgUrl = profile.attachments.first().url

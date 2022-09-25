@@ -88,7 +88,7 @@ async function preExecute() {
       .setStyle(TextInputStyle.Short)
       .setMaxLength(20)
       .setPlaceholder('quote/nickname/profession or something')
-      .setRequired(true),
+      .setRequired(false),
   )
 
   const aboutMeActionRow = new ActionRowBuilder().addComponents(
@@ -108,7 +108,7 @@ async function preExecute() {
       .setLabel('Looking for')
       .setStyle(TextInputStyle.Short)
       .setMaxLength(20)
-      .setRequired(true),
+      .setRequired(false),
   )
 
   const interestsActionRow = new ActionRowBuilder().addComponents(
@@ -117,7 +117,7 @@ async function preExecute() {
       .setLabel('Interests')
       .setStyle(TextInputStyle.Paragraph)
       .setMaxLength(100)
-      .setRequired(true),
+      .setRequired(false),
   )
 
   const nameActionRow = new ActionRowBuilder().addComponents(
@@ -185,7 +185,6 @@ async function preExecute() {
     components: [ageActionRow],
   })
 
-  cityNameActionRow.components[0].setRequired(true)
   editModals.locationEdit = new ModalBuilder({
     custom_id: 'locationEditModal',
     title: 'Profile Edit',
