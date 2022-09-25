@@ -9,7 +9,7 @@ import { profileManager } from '../modules.js'
  * @param {Object<string, string>} dataObj
  */
 
-export async function profileGenerate(dataObj) {
+export async function profileGenerate(dataObj, client) {
   // launch browser
   const webPath = path.resolve('assets', 'web', 'main.html')
   const webUrl = url.pathToFileURL(webPath)
@@ -59,7 +59,7 @@ export async function profileGenerate(dataObj) {
       quality: 100,
     })
     const imgBufff = Buffer.from(screenData, 'base64')
-    profileManager.emit('created', imgBufff, dataObj)
+    profileManager.emit('send', imgBufff, dataObj, client)
     await page.close()
     await browser.close()
   }, 7000)

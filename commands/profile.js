@@ -237,7 +237,7 @@ async function execute(interaction) {
     dataObj.gender === 'human'
   ) {
     await interaction.editReply({
-      content: 'Your profile does not have necessary roles. e.g. sexuality/dm status role.',
+      content: 'Your profile does not have necessary roles.\ne.g. sexuality/dm status role.',
     })
     return
   }
@@ -322,7 +322,7 @@ async function executeCreate(interaction, dataObj) {
         dataObj.intro.interests = modalSubmit.fields.getTextInputValue('interests')
         dataObj.intro.locationWhole = `${cityName} | ${stateSelected} | ${zoneSelected}`
 
-        await profileGenerate(dataObj)
+        await profileGenerate(dataObj, interaction.client)
         const member = await interaction.guild.members.fetch(interaction.user)
         await member.roles.add(interaction.client.keyv.get('ROLE_PROFILE'))
       })

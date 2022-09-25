@@ -2,7 +2,7 @@
 
 ### Verify
 
-### Log msg
+#### Log msg
 
 Couple
 ```
@@ -19,7 +19,7 @@ Plus
 You are now verified plus!
 ```
 
-### Personal msg
+#### Personal msg
 
 Member
 ```
@@ -41,4 +41,18 @@ Couple
 Thank you for verifying as couple.
 
 You can now access the channels made only for you kinky couples. Check it out!
+```
+
+### Profile
+
+#### Personal msg
+
+Created
+```
+You have created your IKL Profile successfully. Select the link button below to get to your profile.
+```
+
+Edited
+```
+You have edited your IKL Profile successfully. Select the link button below to get to your profile.
 ```

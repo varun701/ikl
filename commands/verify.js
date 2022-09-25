@@ -124,6 +124,7 @@ function generateVerificationDetails(target, user) {
     .setTitle(target.displayName)
     .setDescription(`${target.user.tag}\n\n**Moderator**\n<@${user.id}>`)
     .setThumbnail(target.displayAvatarURL())
+    .setColor('#2f3136')
 }
 
 /**
@@ -135,12 +136,15 @@ async function preExecute(_client) {
   dmMember = new EmbedBuilder()
     .setTitle('Verified Member')
     .setDescription(bot.keyv.personal_msg_new_member)
+    .setColor('#2f3136')
   dmPlus = new EmbedBuilder()
     .setTitle('Verified Plus Member')
     .setDescription(bot.keyv.personal_msg_new_plus)
+    .setColor('#2f3136')
   dmCouple = new EmbedBuilder()
     .setTitle('Verified Couple')
     .setDescription(bot.keyv.personal_msg_new_couple)
+    .setColor('#2f3136')
 }
 
 const builder = new SlashCommandBuilder()
