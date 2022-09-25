@@ -17,7 +17,7 @@ export async function profileDetails(targetMember) {
 
   const list = ['gender', 'sexuality', 'dm_status', 'level_status']
   for (const type of list) {
-    const obj = targetMember.client.keyv.get(`OBJ_${type.toUpperCase()}`)
+    const obj = targetMember.client.keyv.get(`OBJ_ROLES_${type.toUpperCase()}`)
     const roleId = fromObj(obj, targetMember._roles)
     details[type] = obj[roleId]
     if (roleId === 'none') details[type] = 'human'

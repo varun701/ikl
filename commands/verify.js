@@ -66,10 +66,10 @@ async function execute(interaction) {
   // log messages
   const logChannelID =
     subCommand === 'couple'
-      ? interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_COUPLE')
+      ? interaction.client.keyv.get('CHANNEL_VERIFIED_COUPLE')
       : subCommand === 'member'
-        ? interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_MEMBER')
-        : interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_PLUS')
+        ? interaction.client.keyv.get('CHANNEL_VERIFIED_MEMBER')
+        : interaction.client.keyv.get('CHANNEL_VERIFIED_PLUS')
   const logChannel = await interaction.client.channels.fetch(logChannelID)
   await logChannel.send({
     content: messageContent,
@@ -77,7 +77,7 @@ async function execute(interaction) {
   })
 
   // mod log messages
-  const modLogChannelID = interaction.client.keyv.get('CHANNEL_VERIFICATION_LOGS_MODS')
+  const modLogChannelID = interaction.client.keyv.get('CHANNEL_VERIFIED_LOGS')
   const modLogChannel = await interaction.client.channels.fetch(modLogChannelID)
   await modLogChannel.send({
     content: subCommand, // name of subcommand, different thn log
