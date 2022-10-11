@@ -84,10 +84,10 @@ async function preExecute() {
   const quoteActionRow = new ActionRowBuilder().addComponents(
     new TextInputBuilder()
       .setCustomId('quote')
-      .setLabel('Quote')
+      .setLabel('Pronouns/Nickname/Quote')
       .setStyle(TextInputStyle.Short)
       .setMaxLength(20)
-      .setPlaceholder('quote/nickname/profession or something')
+      .setPlaceholder('pronouns/quote/nickname/profession or something')
       .setRequired(false),
   )
 
