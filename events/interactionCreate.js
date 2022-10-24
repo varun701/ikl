@@ -1,10 +1,10 @@
-import commandHandler from '@utils/modules/core/command-handler.js'
+import { commandExecutor } from '../utils/core/command-handler.js'
 import logger from '@pino'
 
 async function execute(interaction) {
   try {
     if (interaction.isButton()) await ifButton(interaction)
-    if (interaction.isCommand()) await commandHandler(interaction)
+    if (interaction.isCommand()) await commandExecutor(interaction)
     if (interaction.isSelectMenu()) await ifSelectMenu(interaction)
     if (interaction.isModalSubmit()) await ifModalSubmit(interaction)
   }

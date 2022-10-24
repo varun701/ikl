@@ -37,7 +37,7 @@ isMember:
   0: old member
 */
 
-export default (sequelize, dataTypes) =>
+export const memberModel = (sequelize, dataTypes) =>
   sequelize.define(
     'members',
     {

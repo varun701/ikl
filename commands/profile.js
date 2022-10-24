@@ -15,7 +15,7 @@ import {
   modalCollector,
   profileDetails,
   profileGenerate,
-  selectMenuCollectorr,
+  selectMenuCollector,
 } from '../utils/functions.js'
 
 const data = {
@@ -259,7 +259,7 @@ async function executeCreate(interaction, dataObj) {
     components: [zoneSelectMenuRow],
   })
 
-  await selectMenuCollectorr(message, async (err, zonesInteraction) => {
+  await selectMenuCollector(message, async (err, zonesInteraction) => {
     if (err) {
       await interaction.editReply({
         content: 'You did not select zone. Command canceled.',
@@ -280,7 +280,7 @@ async function executeCreate(interaction, dataObj) {
       components: [stateSelectMenuRows[zoneSelected]],
     })
 
-    await selectMenuCollectorr(message2, async (err, statesInteraction) => {
+    await selectMenuCollector(message2, async (err, statesInteraction) => {
       if (err) {
         await zonesInteraction.editReply({
           content: 'You did not select state/region. Command canceled.',
@@ -342,7 +342,7 @@ async function executeEdit(interaction) {
     components: [editSelectMenuRow],
   })
 
-  await selectMenuCollectorr(message, async (err, editInteraction) => {
+  await selectMenuCollector(message, async (err, editInteraction) => {
     if (err) {
       await interaction.editReply({
         content: 'You did not choose any. Command canceled.',

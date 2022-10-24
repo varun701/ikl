@@ -1,10 +1,16 @@
 import logger from '@pino'
+import { time } from 'discord.js'
+import dateFormat from 'dateformat'
+// import { statusModule } from '../utils/modules.js'
 
-function execute(_client) {
+async function execute(client) {
   logger.info('Bot is online')
-
   const timeStamp = Date.now()
-  bot.set('startedAt', timeStamp.toString())
+
+  bot.set('bootTime', dateFormat(timeStamp, 'hh:MM TT, dd mmmm yyyy'))
+  bot.set('bootTimeString', time(timeStamp, 'R'))
+
+  // await statusModule(client)
 }
 
 export default {

@@ -24,8 +24,8 @@ export async function profileDetails(targetMember) {
   }
 
   details.ifProfile = targetMember._roles.includes(targetMember.client.keyv.get('ROLE_PROFILE'))
-  const channelId = targetMember.client.keyv.get(`CHANNEL_PROFILES_${details.gender.toUpperCase()}`)
-  details.channel = await targetMember.client.channels.fetch(channelId)
+  // const channelId = targetMember.client.keyv.get(`CHANNEL_PROFILES_${details.gender.toUpperCase()}`)
+  // details.channel = await targetMember.client.channels.fetch(channelId)
   return details
 }
 

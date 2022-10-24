@@ -1,4 +1,4 @@
-import DBs from '../database.js'
+import { DBs } from '../modules/database.js'
 import logger from '@pino'
 
 const force = process.argv.slice(2)[0] === 'force'

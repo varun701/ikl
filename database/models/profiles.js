@@ -1,4 +1,4 @@
-export const profilesModel = (sequelize, DataTypes) =>
+export const profileModel = (sequelize, DataTypes) =>
   sequelize.define(
     'profiles',
     {

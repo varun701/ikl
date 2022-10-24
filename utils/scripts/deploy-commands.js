@@ -5,7 +5,7 @@ import logger from '@pino'
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { commandsList } from '../../commands.js'
+import { commandsList } from '../commands.js'
 const commandBuilders = commandsList.map((command) => command.builder.toJSON())
 const commandScope =
   process.argv.slice(2)[0] === 'test'

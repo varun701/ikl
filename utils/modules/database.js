@@ -2,16 +2,18 @@ import Sequelize from 'sequelize'
 import sequelize from '../lib/sequelize.js'
 import { keyv, keyvEnv } from '../lib/keyv.js'
 import { Collection } from 'discord.js'
-import logger from '../lib/pino.js'
+import logger from '@pino'
 
-import membersModel from '../../database/models/members.js'
-export const membersDB = await membersModel(sequelize, Sequelize.DataTypes)
+import { memberModel } from '../../database/models/members.js'
+export const Member = await memberModel(sequelize, Sequelize.DataTypes)
 
-import { profilesModel } from '../../database/models/profiles.js'
-export const profilesDB = await profilesModel(sequelize, Sequelize.DataTypes)
+import { profileModel } from '../../database/models/profiles.js'
+export const Profile = await profileModel(sequelize, Sequelize.DataTypes)
 
-// * Keyv
-import { keyValueConvertor } from '../lib/keyv.js'
+export const DBs = {
+  Member,
+  Profile,
+}
 
 /**
  * Creates client.keyv collection from database/keyv.sqlite
@@ -42,14 +44,15 @@ const keyvcInitial = async (client) => {
   logger.info('Client.keyv loaded')
 }
 
+import { keyValueConvertor } from '../lib/keyv.js'
+
 /**
  * Creates bot.keyv global object from keyv.env
  * * Calls keyvcInitial to create client.keyv
  * @param {Client} client
- * @returns void
  */
 
-export const botInitial = async (client) => {
+export default async function botInitial(client) {
   bot.keyv = {}
 
   const keys = keyvEnv._tokens.filter((tok) => tok.type === 1).map((tok) => tok.value)
@@ -62,10 +65,4 @@ export const botInitial = async (client) => {
   }
   logger.info('Bot.keyv loaded')
   await keyvcInitial(client)
-  return
-}
-
-export default {
-  membersDB,
-  profilesDB,
 }

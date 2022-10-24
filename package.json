@@ -1,6 +1,6 @@
 {
   "name": "ikl",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "nodemon --loader ./utils/lib/alias-loader.js --no-warnings index.js",
     "start": "node --loader ./utils/lib/alias-loader.js --no-warnings index.js",
-    "deploy": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/modules/core/deploy-commands.js",
-    "dbInit": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/modules/core/db-init.js",
+    "deploy": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/scripts/deploy-commands.js",
+    "dbInit": "node --loader ./utils/lib/alias-loader.js --no-warnings utils/scripts/db-init.js",
     "lint": "eslint \"./**/*.js\" --fix",
     "lint:check": "eslint \"./**/*.js\"",
     "pretty": "prettier --write \"./**/*.js\"",
@@ -24,7 +24,6 @@
   "dependencies": {
     "@keyv/sqlite": "^3.5.3",
     "common-tags": "^1.8.2",
-    "date-fns": "^2.29.3",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
     "esm-module-alias": "2.0.1",

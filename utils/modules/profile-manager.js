@@ -6,7 +6,7 @@ import {
   ButtonStyle,
 } from 'discord.js'
 import EventEmitter from 'events'
-import logger from '../lib/pino.js'
+import logger from '@pino'
 
 export const profileManager = new EventEmitter()
 
@@ -65,6 +65,7 @@ profileManager.on('send', async (imgBuff, dataObj, client) => {
 
     const dmChannel = await client.users.createDM(dataObj.userId)
     if (dmChannel) {
+      // ! error
       await dmChannel.send({
         embeds: [
           new EmbedBuilder().setTitle('Profile').setDescription(descriptionStr).setColor('#2f3136'),
@@ -78,10 +79,10 @@ profileManager.on('send', async (imgBuff, dataObj, client) => {
   }
 })
 
-import { profilesDB } from './database.js'
+import { Profile } from './database.js'
 
 async function addToDatabase(dataObj) {
-  await profilesDB.upsert({
+  await Profile.upsert({
     id: dataObj.userId,
     name: dataObj.userName,
     age: dataObj.age,
@@ -97,7 +98,7 @@ async function addToDatabase(dataObj) {
 }
 
 export async function getFromDatabase(id) {
-  const profile = await profilesDB.findByPk(id)
+  const profile = await Profile.findByPk(id)
 
   return profile
 }

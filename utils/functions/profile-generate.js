@@ -34,17 +34,17 @@ export async function profileGenerate(dataObj, client) {
       document.getElementById(value).innerHTML = data[value]
     }
 
-    if (data.pfp) document.getElementById('userProfileImage').src = data.pfp
-    if (data.grd) {
+    if ('pfp' in data) document.getElementById('userProfileImage').src = data.pfp
+    if ('grd' in data) {
       document.getElementById('profile').style.backgroundImage = `linear-gradient(${data.grd})`
     }
-    if (data.color) {
+    if ('color' in data) {
       document.getElementById('userName').style.color = data.color
       document.getElementById(
         'divider',
       ).style.backgroundImage = `linear-gradient(to right, ${data.color}, ${data.color}00)`
     }
-    if (data.bg) {
+    if ('bg' in data) {
       const element = document.getElementById('profile')
       element.style.backgroundImage = `url("${data.bg}")`
       element.style.backgroundSize = 'cover'

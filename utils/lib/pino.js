@@ -43,68 +43,29 @@ const logger = pino(
  * Logs pretty errors with pino
  */
 
-logger.addListener('err', (error) => {
-  // if (typeof error === 'string') return logger.error(error)
-  if (error.details) {
-    logger.error(error.details, 'Error Stack')
-    logger.trace(...error.trace)
-    return
-
-    /**
-     * * Alternate
-     * Separate error logging */
-    // for (const detail of error.details) logger.error(detail)
-  }
-  else {
-    logger.trace(...error.stack.split('/n'))
-    console.log(error.stack)
-    // logger.trace(error)
-  }
-})
-
-export default logger
-
-/**
- * Custom error class to work with pino logger
- * @class MyError
- * @extends Error
- */
-
-class MyError extends Error {
+logger.addListener(
+  'err',
   /**
-   * @param {String | String[]} message
    * @param {Error} error
-   * @returns {this}
    */
-  constructor(message, error = null) {
-    super(message)
-    if (error === null) {
-      this.details = [message]
-      this.trace = this.stack.split('\n')
-      return this
-    }
-    if (error.details) {
-      this.details = [...error.details, message]
-      const oldTrace = error.trace
-      const newTrace = this.stack.split('\n')
-      oldTrace.push(...newTrace)
-      this.trace = oldTrace
+  (error) => {
+    if ('details' in error) {
+      const traceMessage = error.trace.shift(1)
+      const message = error.details.shift(1)
+      logger.error(error.details, message)
+      logger.trace(error.trace, traceMessage)
+      /**
+       * * Alternate
+       * Separate error logging */
+      // for (const detail of error.details) logger.error(detail)
     }
     else {
-      this.details = [error.message, message]
-      this.trace = [...error.stack.split('/n'), ...this.stack.split('/n')]
+      const trace = error.stack.split('\n')
+      const traceMessage = trace.shift(1)
+      logger.error(error.message)
+      logger.trace(trace, traceMessage)
     }
-    return this
-  }
-  /**
-   * To push more stack
-   * @param {String | String[]} details
-   * @returns
-   */
-  push(details) {
-    this.details.push(details)
-    return this
-  }
-}
+  },
+)
 
-globalThis.MyError = MyError
+export default logger

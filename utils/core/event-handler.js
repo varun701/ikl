@@ -1,4 +1,4 @@
-import { eventsList } from '../../events.js'
+import { eventsList } from '../events.js'
 
 /**
  * This function configures client events exported from list.js

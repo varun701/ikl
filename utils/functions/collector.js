@@ -19,7 +19,7 @@ import {
  * @param {callbackSelectMenuManager} cb callback function
  */
 
-export async function selectMenuCollectorr(message, cb) {
+export async function selectMenuCollector(message, cb) {
   const collector = message.createMessageComponentCollector({
     componentType: ComponentType.SelectMenu,
     time: 30000,
