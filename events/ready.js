@@ -1,4 +1,4 @@
-import logger from '@pino'
+import { logger } from '../utils/modules.js'
 import { time } from 'discord.js'
 import dateFormat from 'dateformat'
 // import { statusModule } from '../utils/modules.js'

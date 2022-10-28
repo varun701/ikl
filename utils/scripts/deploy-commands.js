@@ -1,7 +1,6 @@
 import { Routes } from 'discord.js'
 import { REST } from '@discordjs/rest'
-import logger from '@pino'
-
+import { logger } from '../modules.js'
 import dotenv from 'dotenv'
 dotenv.config()
 

@@ -6,7 +6,7 @@ import {
   ButtonStyle,
 } from 'discord.js'
 import EventEmitter from 'events'
-import logger from '@pino'
+import { logger } from '../modules.js'
 
 export const profileManager = new EventEmitter()
 

@@ -2,7 +2,7 @@ import Sequelize from 'sequelize'
 import sequelize from '../lib/sequelize.js'
 import { keyv, keyvEnv } from '../lib/keyv.js'
 import { Collection } from 'discord.js'
-import logger from '@pino'
+import { logger } from '../modules.js'
 
 import { memberModel } from '../../database/models/members.js'
 export const Member = await memberModel(sequelize, Sequelize.DataTypes)

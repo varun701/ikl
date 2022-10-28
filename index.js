@@ -5,7 +5,11 @@ globalThis.bot = new Collection()
 
 const intents = [Intents.Guilds, Intents.GuildMembers, Intents.GuildBans]
 
-const client = new Client({ intents })
+const client = new Client({ intents,
+  presence: {
+    status: 'invisible',
+  },
+})
 
 import { preLogin } from './utils/modules.js'
 await preLogin(client)

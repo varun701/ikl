@@ -1,6 +1,6 @@
 import { Collection } from 'discord.js'
 import { commandsList } from '../commands.js'
-import logger from '@pino'
+import { logger } from '../modules.js'
 
 const commands = new Collection()
 /**

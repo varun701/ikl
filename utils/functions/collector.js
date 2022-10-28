@@ -4,6 +4,7 @@ import {
   ComponentType,
   InteractionCollector,
   InteractionType,
+  ButtonInteraction,
 } from 'discord.js'
 
 /**
@@ -67,6 +68,38 @@ export async function modalCollector(message, cb) {
 
     collected.map(async (m) => {
       await cb(null, m)
+    })
+  })
+}
+
+/**
+ * Callback of modal submit collector
+ * @callback callbackbuttonCollector
+ * @param {string} err
+ * @param {ButtonInteraction} buttonInteraction
+ */
+
+/**
+ * This function collects the button interaction
+ * @param {Message} message
+ * @param {callbackbuttonCollector} cb
+ */
+
+export async function buttonCollector(message, cb) {
+  const collector = message.createMessageComponentCollector({
+    componentType: ComponentType.Button,
+    time: 30000,
+    max: 1,
+  })
+
+  collector.on('end', async (collected) => {
+    if (collected.size === 0) {
+      await cb('TIMEOUT')
+      return
+    }
+
+    collected.map(async (i) => {
+      await cb(null, i)
     })
   })
 }

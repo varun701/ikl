@@ -1,4 +1,4 @@
-import logger from '@pino'
+import { logger } from '../utils/modules.js'
 
 function execute(str) {
   logger.debug(str)

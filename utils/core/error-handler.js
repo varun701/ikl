@@ -1,4 +1,4 @@
-import logger from '@pino'
+import { logger } from '../modules.js'
 
 export default function errorHandler() {
   /**

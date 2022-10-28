@@ -29,7 +29,7 @@ const streams = [
   },
 ]
 
-const logger = pino(
+export const logger = pino(
   {
     level: 'trace',
     timestamp: pino.stdTimeFunctions.isoTime,
@@ -67,5 +67,3 @@ logger.addListener(
     }
   },
 )
-
-export default logger
