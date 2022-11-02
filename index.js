@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 globalThis.bot = new Collection()
 
-const intents = [Intents.Guilds, Intents.GuildMembers, Intents.GuildBans]
+const intents = [Intents.Guilds, Intents.GuildMembers, Intents.GuildBans, Intents.GuildMessages]
 
 const client = new Client({ intents,
   presence: {
