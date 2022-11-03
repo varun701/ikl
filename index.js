@@ -1,13 +1,18 @@
-import { Client, Collection, GatewayIntentBits as Intents } from 'discord.js'
+import { Client, Collection } from 'discord.js'
 import dotenv from 'dotenv'
 dotenv.config()
 globalThis.bot = new Collection()
 
-const intents = [Intents.Guilds, Intents.GuildMembers, Intents.GuildBans, Intents.GuildMessages]
-
-const client = new Client({ intents,
+const client = new Client({
+  intents: Number(process.env.INTENTS),
   presence: {
-    status: 'invisible',
+    status: 'online',
+    activities: [
+      {
+        name: process.env.activityName,
+        type: Number(process.env.activityType),
+      },
+    ],
   },
 })
 
