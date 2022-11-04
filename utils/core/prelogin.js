@@ -1,4 +1,6 @@
-import botInitial from '../modules/database.js'
+import { Collection } from 'discord.js'
+import loggerCreator from '../lib/logger.js'
+import keyvLoader from '../modules/database.js'
 import commandHandler from './command-handler.js'
 import errorHandler from './error-handler.js'
 import eventHandler from './event-handler.js'
@@ -9,8 +11,13 @@ import eventHandler from './event-handler.js'
  */
 
 export async function preLogin(client) {
-  errorHandler(client)
-  await botInitial(client)
+  globalThis.bot = new Collection()
+  globalThis.keyv
+  globalThis.logger
+
+  loggerCreator()
+  errorHandler()
+  await keyvLoader()
   eventHandler(client)
   await commandHandler(client)
 }

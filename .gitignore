@@ -1,6 +1,7 @@
 # Private
 database/*
 temp/
+extra/
 
 .env
 .eslintrc

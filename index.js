@@ -1,7 +1,6 @@
-import { Client, Collection } from 'discord.js'
+import { Client } from 'discord.js'
 import dotenv from 'dotenv'
 dotenv.config()
-globalThis.bot = new Collection()
 
 const client = new Client({
   intents: Number(process.env.INTENTS),

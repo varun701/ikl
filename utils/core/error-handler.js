@@ -1,5 +1,3 @@
-import { logger } from '../modules.js'
-
 export default function errorHandler() {
   /**
    * Custom error class to work with pino logger
@@ -38,8 +36,15 @@ export default function errorHandler() {
     }
   }
 
-  bot.Error = MyError
-  bot.error = (msg, err = null) => {
-    logger.emit('err', new MyError(msg, err))
-  }
+  Reflect.defineProperty(global.bot, 'Error', {
+    value: MyError,
+  })
+
+  Reflect.defineProperty(global.bot, 'error', {
+    value: (msg, err = null) => {
+      const error = new MyError(msg, err)
+      error.trace.splice(1, 1)
+      logger.emit('err', error)
+    },
+  })
 }

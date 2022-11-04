@@ -1,6 +1,5 @@
 import { Collection } from 'discord.js'
 import { commandsList } from '../commands.js'
-import { logger } from '../modules.js'
 
 const commands = new Collection()
 /**
@@ -10,19 +9,18 @@ const commands = new Collection()
 
 export default async function commandHandler(client) {
   for await (const command of commandsList) {
-    if (typeof command !== 'object') throw new Error('Invalid Command Object')
-    if (!command.data || !command.execute) throw new Error('Invalid Command Structre')
     commands.set(command.data.name, command.execute)
 
-    if ('preExecute' in command) {
+    if ('setup' in command) {
       try {
-        await command.preExecute(client)
-        logger.info(`Pre excute succeeded. Command name: ${command.data.name}`)
+        await command.setup(client)
+        logger.info(`Setup Done. Command name: ${command.data.name}`)
       }
       catch (err) {
-        throw new bot.Error(`Pre execute failed. Command name: ${command.data.name}`, err)
+        throw new bot.Error(`Setup Failed. Command name: ${command.data.name}`, err)
       }
     }
+    logger.info(`Command Enabled. Command name: ${command.data.name}`)
   }
 }
 
@@ -33,7 +31,7 @@ export default async function commandHandler(client) {
 export async function commandExecutor(interaction) {
   const executeCommand = commands.get(interaction.commandName)
   if (!executeCommand) {
-    logger.error(`Unknown command Interaction. Command name: ${interaction.commandName}`)
+    logger.error(`Unknown Command Interaction. Command name: ${interaction.commandName}`)
     return
   }
 
@@ -41,6 +39,6 @@ export async function commandExecutor(interaction) {
     await executeCommand(interaction)
   }
   catch (e) {
-    bot.error(`Command Execution failed. Command name: ${interaction.commandName}`, e)
+    bot.error(`Command Execution Failed. Command name: ${interaction.commandName}`, e)
   }
 }

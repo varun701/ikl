@@ -7,7 +7,7 @@ import { eventsList } from '../events.js'
 
 export default function eventHandler(client) {
   for (const event of eventsList) {
-    if (event.once) {
+    if ('once' in event) {
       client.once(event.name, (...args) => event.execute(...args))
     }
     else {

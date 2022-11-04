@@ -5,7 +5,6 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
 } from 'discord.js'
-import { logger } from '../utils/modules.js'
 
 const data = {
   name: 'verify',

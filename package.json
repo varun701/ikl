@@ -10,13 +10,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "dbInit": "node utils/scripts/db-init.js",
-    "deploy": "node utils/scripts/deploy-commands.js",
-
-    "lint": "eslint \"./**/*.js\" --fix",
-    "lint:check": "eslint \"./**/*.js\"",
+    "lint": "eslint \"./**/*.js\"",
     "pretty": "prettier --write \"./**/*.js\"",
-    "format": "npm run pretty && npm run lint"
+    "format": "npm run pretty && npm run lint -- --fix"
   },
   "keywords": [],
   "author": "",
@@ -26,9 +22,8 @@
     "common-tags": "^1.8.2",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.1",
-    "esm-module-alias": "2.0.1",
-    "key-value-file": "^1.0.10",
     "keyv": "^4.4.1",
+    "lodash": "^4.17.21",
     "pino": "^8.5.0",
     "pino-pretty": "^9.1.0",
     "puppeteer": "^18.0.5",
@@ -43,5 +38,9 @@
   "bugs": {
     "url": "https://github.com/varun701/ikl/issues"
   },
-  "homepage": "https://github.com/varun701/ikl#readme"
+  "homepage": "https://github.com/varun701/ikl#readme",
+  "devDependencies": {
+    "@types/dateformat": "^5.0.0",
+    "@types/lodash": "^4.14.187"
+  }
 }

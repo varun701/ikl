@@ -1,5 +1,4 @@
 import { commandExecutor } from '../utils/core/command-handler.js'
-import { logger } from '../utils/modules.js'
 
 async function execute(interaction) {
   try {
