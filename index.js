@@ -8,8 +8,8 @@ const client = new Client({
     status: 'online',
     activities: [
       {
-        name: process.env.activityName,
-        type: Number(process.env.activityType),
+        name: process.env.ACTIVITY_NAME,
+        type: Number(process.env.ACTIVITY_TYPE),
       },
     ],
   },
