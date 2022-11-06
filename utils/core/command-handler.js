@@ -14,13 +14,13 @@ export default async function commandHandler(client) {
     if ('setup' in command) {
       try {
         await command.setup(client)
-        logger.info(`Setup Done. Command name: ${command.data.name}`)
+        logger.info(`Command Setup Done: ${command.data.name}`)
       }
       catch (err) {
-        throw new bot.Error(`Setup Failed. Command name: ${command.data.name}`, err)
+        throw new bot.Error(`Command Setup Failed: ${command.data.name}`, err)
       }
     }
-    logger.info(`Command Enabled. Command name: ${command.data.name}`)
+    logger.info(`Command Enabled: ${command.data.name}`)
   }
 }
 
@@ -31,7 +31,7 @@ export default async function commandHandler(client) {
 export async function commandExecutor(interaction) {
   const executeCommand = commands.get(interaction.commandName)
   if (!executeCommand) {
-    logger.error(`Unknown Command Interaction. Command name: ${interaction.commandName}`)
+    logger.error(`Unknown Command Interaction: ${interaction.commandName}`)
     return
   }
 
@@ -39,6 +39,6 @@ export async function commandExecutor(interaction) {
     await executeCommand(interaction)
   }
   catch (e) {
-    bot.error(`Command Execution Failed. Command name: ${interaction.commandName}`, e)
+    bot.error(`Failed Command Execution: ${interaction.commandName}`, e)
   }
 }

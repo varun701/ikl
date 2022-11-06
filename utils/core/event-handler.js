@@ -13,5 +13,6 @@ export default function eventHandler(client) {
     else {
       client.on(event.name, (...args) => event.execute(...args))
     }
+    logger.info(`Event Enabled: ${event.name}`)
   }
 }

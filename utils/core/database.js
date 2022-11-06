@@ -40,6 +40,5 @@ export default async function keyvLoader() {
   for await (const [key, value] of keyvLib.iterator()) {
     keyvc.set(key, value)
   }
-  logger.info('Keyv loaded')
   global.keyv = keyvc
 }

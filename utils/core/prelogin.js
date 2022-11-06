@@ -1,6 +1,6 @@
 import { Collection } from 'discord.js'
 import loggerCreator from '../lib/logger.js'
-import keyvLoader from '../modules/database.js'
+import keyvLoader from './database.js'
 import commandHandler from './command-handler.js'
 import errorHandler from './error-handler.js'
 import eventHandler from './event-handler.js'

@@ -5,16 +5,16 @@ export const warn = {
   },
 }
 export const error = {
-  name: 'ereor',
+  name: 'error',
   execute: (msg) => {
-    logger.warn(msg)
+    logger.error(msg)
   },
 }
 
 export const debug = {
   name: 'debug',
   execute: (msg) => {
-    logger.warn(msg)
+    logger.debug(msg)
   },
 }
 
