@@ -1,15 +1,8 @@
-import { time } from 'discord.js'
-import dateFormat from 'dateformat'
-// import { statusModule } from '../utils/modules.js'
+import { onLogin } from '../utils/modules.js'
 
 async function execute(client) {
   logger.info('Bot is online')
-  const timeStamp = Date.now()
-
-  bot.set('bootTime', dateFormat(timeStamp, 'hh:MM TT, dd mmmm yyyy'))
-  bot.set('bootTimeString', time(timeStamp, 'R'))
-
-  // await statusModule(client)
+  await onLogin(client)
 }
 
 export default {
