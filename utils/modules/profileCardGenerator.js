@@ -58,8 +58,8 @@ export async function profileCardGenerator(introObject, client) {
       quality: 100,
     })
     const imgBuff = Buffer.from(screenData, 'base64')
-    page.close()
-    browser.close()
+    await page.close()
+    await browser.close()
     // return imgBuff
     await introSender(client, introObject, imgBuff)
   }, 7000)
