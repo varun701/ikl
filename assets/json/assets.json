@@ -1,0 +1,77 @@
+{
+  "embed": {
+    "title": "{{title}}",
+    "description": "{{desc}}",
+    "color": 3092790
+  },
+  "timeout": {
+    "content": "",
+    "embeds": [
+      {
+        "title": "Command Canceled",
+        "description": "**TIMEOUT**",
+        "color": 15879747
+      }
+    ],
+    "components": []
+  },
+  "error": {
+    "content": "",
+    "embeds": [
+      {
+        "title": "Command Canceled",
+        "description": "**ERROR**",
+        "color": 15879747
+      }
+    ],
+    "components": []
+  },
+  "canceled": {
+    "content": "",
+    "embeds": [
+      {
+        "title": "Command Canceled",
+        "description": "**USER OPTED**",
+        "color": 15879747
+      }
+    ],
+    "components": []
+  },
+  "waiting": {
+    "content": "",
+    "embeds": [
+      {
+        "title": "Waiting",
+        "description": "**Waiting for your Responce.**",
+        "color": 15879747
+      }
+    ],
+    "components": []
+  },
+  "success": {
+    "content": "",
+    "embeds": [
+      {
+        "title": "Success",
+        "description": "**Your Intro will be uploaded soon.**",
+        "color": 52084
+      }
+    ],
+    "components": []
+  },
+  "intro_interface": {
+    "components": [
+      {
+        "type": 1,
+        "components": [
+          {
+            "type": 2,
+            "custom_id": "intro",
+            "label": "Intro",
+            "style": 3
+          }
+        ]
+      }
+    ]
+  }
+}

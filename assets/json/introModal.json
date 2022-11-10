@@ -1,0 +1,78 @@
+{
+  "custom_id": "introModal",
+  "title": "Profile Intro",
+  "components": [
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 4,
+          "custom_id": "about_me",
+          "label": "About Me",
+          "style": 2,
+          "min_length": 20,
+          "max_length": 1000,
+          "placeholder": "Required",
+          "required": true
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 4,
+          "custom_id": "city_name",
+          "label": "City name",
+          "style": 1,
+          "min_length": 3,
+          "max_length": 15,
+          "placeholder": "Not Required",
+          "required": false
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 4,
+          "custom_id": "quote",
+          "label": "Pronouns/Nickname/Short Quote",
+          "style": 1,
+          "max_length": 20,
+          "placeholder": "Not Required",
+          "required": false
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 4,
+          "custom_id": "interests",
+          "label": "Interests",
+          "style": 2,
+          "max_length": 100,
+          "placeholder": "Not Required",
+          "required": false
+        }
+      ]
+    },
+    {
+      "type": 1,
+      "components": [
+        {
+          "type": 4,
+          "custom_id": "looking_for",
+          "label": "Looking for",
+          "style": 1,
+          "max_length": 50,
+          "placeholder": "Not Required",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

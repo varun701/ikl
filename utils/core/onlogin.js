@@ -2,7 +2,6 @@ import { time } from 'discord.js'
 import dateFormat from 'dateformat'
 import { assetsLoader } from '../assets.js'
 
-
 export async function onLogin(_client) {
   const timeStamp = Date.now()
 

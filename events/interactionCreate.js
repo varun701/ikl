@@ -1,4 +1,7 @@
+// eslint-disable-next-line no-unused-vars
+import { ButtonInteraction } from 'discord.js'
 import { commandExecutor } from '../utils/core/command-handler.js'
+import { introHandler } from '../utils/modules/intro.js'
 
 async function execute(interaction) {
   try {
@@ -12,7 +15,11 @@ async function execute(interaction) {
   }
 }
 
-async function ifButton(_interaction) {
+/**
+ * @param {ButtonInteraction} interaction
+ */
+async function ifButton(interaction) {
+  if (interaction.customId === 'intro') await introHandler(interaction)
   return
 }
 

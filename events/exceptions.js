@@ -17,4 +17,3 @@ export const debug = {
     logger.debug(msg)
   },
 }
-

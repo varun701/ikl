@@ -1,4 +1,4 @@
-import { DBs } from '../modules/database.js'
+import { DBs } from '../core/database.js'
 
 const force = process.argv.slice(2)[0] === 'force'
 

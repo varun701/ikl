@@ -1,17 +1,12 @@
-import Sequelize from 'sequelize'
-import sequelize from '../lib/sequelize.js'
+import { sequelize } from '../lib/sequelize.js'
 import { keyvLib } from '../lib/keyv.js'
 import { Collection } from 'discord.js'
 
-import { memberModel } from '../../database/models/members.js'
-export const Member = await memberModel(sequelize, Sequelize.DataTypes)
-
-import { profileModel } from '../../database/models/profiles.js'
-export const Profile = await profileModel(sequelize, Sequelize.DataTypes)
+import { introModel } from '../../database/models/intro.js'
+export const Intro = await introModel(sequelize)
 
 export const DBs = {
-  Member,
-  Profile,
+  Intro,
 }
 
 /**
