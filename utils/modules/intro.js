@@ -2,7 +2,7 @@
 import { InteractionCollector, InteractionType, AttachmentBuilder, userMention } from 'discord.js'
 // eslint-disable-next-line no-unused-vars
 import { Client, ButtonInteraction, ModalSubmitInteraction, GuildMember } from 'discord.js'
-import findKey from 'lodash/findkey.js'
+import _ from 'lodash'
 import { assets, getAssets, introAssets } from '../assets.js'
 import { Intro } from '../core/database.js'
 import { profileCardGenerator } from './profileCardGenerator.js'
@@ -118,11 +118,8 @@ const getProfileRoles = (member) => {
     verificationRoles: [],
   }
 
-  console.log(rolesObj)
-  console.log(roleIDs)
-
   roleIDs.map((roleID) => {
-    const roleType = findKey(rolesObj, roleID)
+    const roleType = _.findKey(rolesObj, roleID)
     if (roleType !== undefined) {
       Array.isArray(profileRoles[roleType])
         ? profileRoles[roleType].push(rolesObj[roleType][roleID])
@@ -164,9 +161,6 @@ export async function introHandler(buttonInteraction) {
   const profileRoles = getProfileRoles(member)
   const profileDetails = getProfileDetails(member)
 
-  console.log(profileRoles)
-  console.log(profileDetails)
-
   const requirementCheck = checkRequiredRoles(profileRoles)
   if (!requirementCheck[0]) return buttonInteraction.editReply(introAssets('no_gender_role', true))
   if (requirementCheck[1].length !== 0) {
@@ -180,6 +174,7 @@ export async function introHandler(buttonInteraction) {
     return
   }
 
+  // todo edit and update options
   await buttonInteraction.editReply(introAssets('not_available_yet'))
 }
 
@@ -199,7 +194,8 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
     location_style = 2,
     theme_style = 2
   let confirm_disabled = true,
-    confirm_style = 2
+    confirm_style = 2,
+    confirmed = false
 
   // New Intro Creation Interface
   const messageObj = () => {
@@ -243,12 +239,13 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
       confirm_disabled = false
       confirm_style = 3
     }
-    if (collected.customId === 'cancel') {
-      await collected.update(getAssets('caceled'))
+    if (collected.customId === 'cancel_button') {
+      await collected.update(getAssets('canceled'))
       return
     }
 
     if (collected.customId === 'confirm_button') {
+      confirmed = true
       await collected.showModal(assets.introModal_json())
       await buttonInteraction.editReply(getAssets('waiting'))
       const collecter = new InteractionCollector(message.client, {
@@ -276,11 +273,6 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
 
         try {
           await profileCardGenerator(introObject, buttonInteraction.client)
-
-          // const profileCardBuff = await profileCardGenerator(introObject)
-
-          // if (typeof profileCardBuff === Buffer) throw new bot.error('Profile Card is not valid.')
-          // await introSender(buttonInteraction.client, introObject, profileCardBuff)
         }
         catch (e) {
           bot.error('Inro not created.', e)
@@ -291,6 +283,12 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
 
     await collected.update(messageObj())
   })
+
+  collector.on('end', async (_collection) => {
+    if (!confirmed) {
+      await buttonInteraction.editReply(getAssets('timeout'))
+    }
+  })
 }
 
 /**
@@ -300,7 +298,6 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
  * @param {Buffer} profileCardBuff
  */
 export async function introSender(client, introObject, profileCardBuff) {
-  console.log(introObject)
   const { userID, userTag } = introObject
   const profileCard = new AttachmentBuilder(profileCardBuff) // Get profile card buff
 
