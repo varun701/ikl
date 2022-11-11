@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { InteractionCollector, InteractionType, AttachmentBuilder, userMention } from 'discord.js'
+import { InteractionCollector, InteractionType, AttachmentBuilder, userMention, EmbedBuilder } from 'discord.js'
 // eslint-disable-next-line no-unused-vars
 import { Client, ButtonInteraction, ModalSubmitInteraction, GuildMember } from 'discord.js'
 import _ from 'lodash'
@@ -298,9 +298,9 @@ export async function introSender(client, introObject, profileCardBuff) {
 
   // Create Embeds array for Profile Intro
   const embedsIntro = []
-  if (introObject.lookingFor !== '') embedsIntro.push({ title: 'Looking For', desciption: introObject.lookingFor })
-  if (introObject.interests !== '') embedsIntro.push({ title: 'Interests', desciption: introObject.interests })
-  if (introObject.aboutMe !== '') embedsIntro.push({ title: 'About Me', desciption: introObject.aboutMe })
+  if (introObject.lookingFor !== '') embedsIntro.push(new EmbedBuilder({ title: 'Looking For', description: introObject.lookingFor }))
+  if (introObject.interests !== '') embedsIntro.push(new EmbedBuilder({ title: 'Interests', description: introObject.interests }))
+  if (introObject.aboutMe !== '') embedsIntro.push(new EmbedBuilder({ title: 'About Me', description: introObject.aboutMe }))
 
   // Intro Archive
   const channelIdArchive = keyv.get('channel_intro_archive')
