@@ -1,1 +1,3 @@
-export const commandsList = []
+import viewIntro from '../commands/viewIntro.js'
+
+export const commandsList = [viewIntro]
