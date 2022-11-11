@@ -22,7 +22,7 @@ const addIntroRole = async (client, id) => {
   if (guild === null || guild === undefined) return
   const member = await guild.members.fetch(id)
   if (member === null || member === undefined) return
-  await member.addRole(keyv.get('role_intro'))
+  await member.roles.add(keyv.get('role_intro'))
 }
 
 /**
