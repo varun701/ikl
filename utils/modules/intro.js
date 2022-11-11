@@ -295,12 +295,13 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
 export async function introSender(client, introObject, profileCardBuff) {
   const { userID, userTag } = introObject
   const profileCard = new AttachmentBuilder(profileCardBuff) // Get profile card buff
+  const embedBuild = (title, description) => new EmbedBuilder({ title, description, color: 3092790 })
 
   // Create Embeds array for Profile Intro
   const embedsIntro = []
-  if (introObject.lookingFor !== '') embedsIntro.push(new EmbedBuilder({ title: 'Looking For', description: introObject.lookingFor }))
-  if (introObject.interests !== '') embedsIntro.push(new EmbedBuilder({ title: 'Interests', description: introObject.interests }))
-  if (introObject.aboutMe !== '') embedsIntro.push(new EmbedBuilder({ title: 'About Me', description: introObject.aboutMe }))
+  if (introObject.lookingFor !== '') embedsIntro.push(embedBuild('Looking For', introObject.lookingFor))
+  if (introObject.interests !== '') embedsIntro.push(embedBuild('Interests', introObject.interests))
+  if (introObject.aboutMe !== '') embedsIntro.push(embedBuild('About Me', introObject.aboutMe))
 
   // Intro Archive
   const channelIdArchive = keyv.get('channel_intro_archive')
