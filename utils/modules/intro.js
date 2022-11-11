@@ -17,11 +17,6 @@ const addToDatabase = async (introObject) => {
   })
 }
 
-const _getFromDatabase = async (id) => {
-  const intro = await Intro.findByPk(id)
-  return intro ?? null
-}
-
 /**
  * @param {string[]} verificationRoles
  * @returns {string} verificationStatus
