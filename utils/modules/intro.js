@@ -17,6 +17,14 @@ const addToDatabase = async (introObject) => {
   })
 }
 
+const addIntroRole = async (client, id) => {
+  const guild = await client.guilds.fetch(keyv.get('guild_main'))
+  if (guild === null || guild === undefined) return
+  const member = await guild.members.fetch(id)
+  if (member === null || member === undefined) return
+  await member.addRole(keyv.get('role_intro'))
+}
+
 /**
  * @param {string[]} verificationRoles
  * @returns {string} verificationStatus
@@ -246,7 +254,7 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
       const collecter = new InteractionCollector(message.client, {
         message,
         interactionType: InteractionType.ModalSubmit,
-        time: 5 * 60 * 1000,
+        time: 14 * 60 * 1000,
         max: 1,
       })
 
@@ -333,4 +341,5 @@ export async function introSender(client, introObject, profileCardBuff) {
   introObject.introUrl = introUrl
 
   await addToDatabase(introObject)
+  await addIntroRole(client, introObject.userID)
 }
