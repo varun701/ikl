@@ -1,0 +1,5 @@
+{
+  "message_content_member": "Welcome to verified only section of server! <@{{id}}>",
+  "message_content_plus": "You are now verified plus! <@{{id}}>",
+  "message_content_couple": "New couple have arrived! <@{{id}}>"
+}
