@@ -298,21 +298,9 @@ export async function introSender(client, introObject, profileCardBuff) {
 
   // Create Embeds array for Profile Intro
   const embedsIntro = []
-  if (introObject.lookingFor !== '') {
-    embedsIntro.push({
-      embeds: [{ title: 'Looking For', desciption: introObject.lookingFor }],
-    })
-  }
-  if (introObject.interests !== '') {
-    embedsIntro.push({
-      embeds: [{ title: 'Interests', desciption: introObject.interests }],
-    })
-  }
-  if (introObject.aboutMe !== '') {
-    embedsIntro.push({
-      embeds: [{ title: 'About Me', desciption: introObject.aboutMe }],
-    })
-  }
+  if (introObject.lookingFor !== '') embedsIntro.push({ title: 'Looking For', desciption: introObject.lookingFor })
+  if (introObject.interests !== '') embedsIntro.push({ title: 'Interests', desciption: introObject.interests })
+  if (introObject.aboutMe !== '') embedsIntro.push({ title: 'About Me', desciption: introObject.aboutMe })
 
   // Intro Archive
   const channelIdArchive = keyv.get('channel_intro_archive')
