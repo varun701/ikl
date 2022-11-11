@@ -2,7 +2,7 @@
 import { SlashCommandBuilder, ChatInputCommandInteraction, ChannelType } from 'discord.js'
 import https from 'https'
 import fs from 'fs'
-import { jsonDataParser } from '../utils/assets.js'
+import { jsonDataParser, getAssets } from '../utils/assets.js'
 
 const data = {
   name: 'notice',
@@ -89,7 +89,7 @@ const execute = async (interaction) => {
         return
       }
       await channel?.send(message)
-      await interaction.editReply('Done')
+      await interaction.editReply(getAssets('success'))
     })
   })
 }

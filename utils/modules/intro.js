@@ -257,7 +257,7 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
         }
 
         const modalSubmit = modalCollected.first()
-        await modalSubmit.update(getAssets('success'))
+        await modalSubmit.update(introAssets('success'))
 
         const introObject = getIntroObject(
           profileRoles,

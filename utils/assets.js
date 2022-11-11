@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-let assets_json, intro_json, introModal_json
+const jsons = {}
 
 const replacer = (expression, valueObj) => {
   const templateMatcher1 = /{{\s?([^{}\s]*)\s?}}/g
@@ -19,33 +19,26 @@ export const jsonDataParser = (jsonData, valueObj = {}) =>
   JSON.parse(replacer(JSON.stringify(JSON.parse(jsonData)), valueObj))
 export const stringParser = (json, valueObj = {}) => replacer(JSON.stringify(json), valueObj)
 
-/**
- * @param {string} str
- * @param {{} | boolean} obj
- * @returns
- */
-export const introAssets = (str, obj = false) => {
+const assetsFetcher = (json, str, obj) => {
   if (typeof obj === 'boolean') {
-    if (obj) return jsonParser(intro_json[str])
-    return intro_json[str]
+    if (obj) return jsonParser(json[str])
+    return json[str]
   }
-  return jsonParser(intro_json[str], obj)
-}
-export const getAssets = (str, obj = false) => {
-  if (typeof obj === 'boolean') {
-    if (obj) return jsonParser(assets_json[str])
-    return assets_json[str]
-  }
-  return jsonParser(assets_json[str], obj)
+  return jsonParser(json[str], obj)
 }
 
+export const getAssets = (str, obj = false) => assetsFetcher(jsons.assets_json, str, obj)
+export const introAssets = (str, obj = false) => assetsFetcher(jsons.intro_json, str, obj)
+export const verifyAssets = (str, obj = false) => assetsFetcher(jsons.verify_json, str, obj)
+
 export const assets = {
-  embed: (title, desc) => jsonParser(assets_json.embed, { title, desc }),
-  introModal_json: () => introModal_json,
+  embed: (title, desc) => jsonParser(jsons.assets_json.embed, { title, desc }),
+  introModal_json: () => jsons.introModal_json,
 }
 
 export const assetsLoader = async () => {
-  introModal_json = JSON.parse(fs.readFileSync('assets/json/introModal.json'))
-  assets_json = JSON.parse(fs.readFileSync('assets/json/assets.json'))
-  intro_json = JSON.parse(fs.readFileSync('assets/json/intro.json'))
+  jsons.introModal_json = JSON.parse(fs.readFileSync('assets/json/introModal.json'))
+  jsons.assets_json = JSON.parse(fs.readFileSync('assets/json/assets.json'))
+  jsons.intro_json = JSON.parse(fs.readFileSync('assets/json/intro.json'))
+  jsons.verify_json = JSON.parse(fs.readFileSync('assets/json/verify.json'))
 }

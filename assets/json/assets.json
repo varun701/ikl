@@ -53,7 +53,7 @@
     "embeds": [
       {
         "title": "Success",
-        "description": "**Your Intro will be uploaded soon.**",
+        "description": "**Command Executed successfully.**",
         "color": 52084
       }
     ],
