@@ -32,7 +32,6 @@ export const introAssets = (str, obj = false) => assetsFetcher(jsons.intro_json,
 export const verifyAssets = (str, obj = false) => assetsFetcher(jsons.verify_json, str, obj)
 
 export const assets = {
-  embed: (title, desc) => jsonParser(jsons.assets_json.embed, { title, desc }),
   introModal_json: () => jsons.introModal_json,
 }
 

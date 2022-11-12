@@ -1,9 +1,4 @@
 {
-  "embed": {
-    "title": "{{title}}",
-    "description": "{{desc}}",
-    "color": 3092790
-  },
   "timeout": {
     "content": "",
     "embeds": [
