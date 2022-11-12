@@ -126,7 +126,7 @@ const getProfileRoles = (member) => {
     if (roleType !== undefined) {
       Array.isArray(profileRoles[roleType])
         ? profileRoles[roleType].push(rolesObj[roleType][roleID])
-        : typeof profileRoles[roleType] === Boolean
+        : typeof profileRoles[roleType] === 'boolean'
           ? (profileRoles[roleType] = true)
           : (profileRoles[roleType] = rolesObj[roleType][roleID])
     }
