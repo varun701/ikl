@@ -88,7 +88,7 @@ const getIntroObject = (profileRoles, profileDetails, selected, modalSubmit) => 
 /**
  * Checks the required roles for profile creation
  * @param {*} profileRoles
- * @returns {[boolean, string[], boolean]} requirementCheck
+ * @returns {[boolean, string[]]} requirementCheck
  */
 const checkRequiredRoles = (profileRoles) => {
   if (profileRoles.genderRole === null) return [false]
@@ -97,8 +97,7 @@ const checkRequiredRoles = (profileRoles) => {
   if (profileRoles.sexualityRole === null) rolesNotFound.push('Sexuality Role')
   if (profileRoles.locationRole === null) rolesNotFound.push('Location Role')
   if (profileRoles.dmStatusRole === null) rolesNotFound.push('DM Preference Role')
-  if (profileRoles.ifIntro === true) return [true, rolesNotFound, true]
-  return [true, rolesNotFound, false]
+  return [true, rolesNotFound]
 }
 
 /**
@@ -172,7 +171,7 @@ export async function introHandler(buttonInteraction) {
     )
   }
 
-  if (!requirementCheck[2]) {
+  if (profileRoles.intro === false) {
     await newIntroCreation(buttonInteraction, profileRoles, profileDetails)
     return
   }
