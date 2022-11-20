@@ -90,7 +90,7 @@ const getIntroObject = (profileRoles, profileDetails, selected, modalSubmit) => 
  * @param {*} profileRoles
  * @returns {[boolean, string[]]} requirementCheck
  */
-const checkRequiredRoles = (profileRoles) => {
+export const checkRequiredRoles = (profileRoles) => {
   if (profileRoles.genderRole === null) return [false]
   const rolesNotFound = []
   if (profileRoles.ageRole === null) rolesNotFound.push('Age Role')
@@ -104,7 +104,7 @@ const checkRequiredRoles = (profileRoles) => {
  * Generates Profile Roles Object for GuildMember
  * @param {GuildMember} member
  */
-const getProfileRoles = (member) => {
+export const getProfileRoles = (member) => {
   const roleIDs = Array.from(member._roles)
   const rolesObj = keyv.get('rolesObject')
   const profileRoles = {

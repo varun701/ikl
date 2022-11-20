@@ -28,6 +28,7 @@ const assetsFetcher = (json, str, obj) => {
 }
 
 export const getAssets = (str, obj = false) => assetsFetcher(jsons.assets_json, str, obj)
+export const findAssets = (str, obj = false) => assetsFetcher(jsons.find_json, str, obj)
 export const introAssets = (str, obj = false) => assetsFetcher(jsons.intro_json, str, obj)
 export const verifyAssets = (str, obj = false) => assetsFetcher(jsons.verify_json, str, obj)
 
@@ -38,6 +39,7 @@ export const assets = {
 export const assetsLoader = async () => {
   jsons.introModal_json = JSON.parse(fs.readFileSync('assets/json/introModal.json'))
   jsons.assets_json = JSON.parse(fs.readFileSync('assets/json/assets.json'))
+  jsons.find_json = JSON.parse(fs.readFileSync('assets/json/find.json'))
   jsons.intro_json = JSON.parse(fs.readFileSync('assets/json/intro.json'))
   jsons.verify_json = JSON.parse(fs.readFileSync('assets/json/verify.json'))
 }
