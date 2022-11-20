@@ -36,15 +36,17 @@ const builder = new SlashCommandBuilder()
 const verifyAndLog = async (member, moderator, type) => {
   const message = {
     content: verifyAssets(`message_content_${type}`, { id: member.id }),
-    embeds: [{
-      title: member.displayName,
-      description: member.user.tag,
-      color: 3092790,
-      thumbnail: {
-        url: member.displayAvatarURL(),
+    embeds: [
+      {
+        title: member.displayName,
+        description: member.user.tag,
+        color: 3092790,
+        thumbnail: {
+          url: member.displayAvatarURL(),
+        },
+        fields: [{ name: 'Moderator', value: `<@${moderator.id}>` }],
       },
-      fields: [{ name: 'Moderator', value: `<@${moderator.id}>` }],
-    }],
+    ],
   }
   await member.roles.add(keyv.get(`role_verified_${type}`))
   const channel = await member.client.channels.fetch(keyv.get(`channel_verified_${type}`))

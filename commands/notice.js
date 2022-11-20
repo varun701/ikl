@@ -12,43 +12,32 @@ const builder = new SlashCommandBuilder()
   .setName('notice')
   .setDescription('Send notice from JSON')
   .setDMPermission(false)
-  .addSubcommand(subcommand =>
+  .addSubcommand((subcommand) =>
     subcommand
       .setName('check')
       .setDescription('Check Message JSON FIle')
-      .addAttachmentOption(option =>
-        option
-          .setName('json')
-          .setDescription('Message JSON File')
-          .setRequired(true)))
-  .addSubcommand(subcommand =>
+      .addAttachmentOption((option) => option.setName('json').setDescription('Message JSON File').setRequired(true)),
+  )
+  .addSubcommand((subcommand) =>
     subcommand
       .setName('member')
       .setDescription('Send notice to member')
-      .addUserOption(option =>
-        option
-          .setName('member')
-          .setDescription('The member you want to send notice to')
-          .setRequired(true))
-      .addAttachmentOption(option =>
-        option
-          .setName('json')
-          .setDescription('Message JSON File')
-          .setRequired(true)))
-  .addSubcommand(subcommand =>
+      .addUserOption((option) =>
+        option.setName('member').setDescription('The member you want to send notice to').setRequired(true),
+      )
+      .addAttachmentOption((option) => option.setName('json').setDescription('Message JSON File').setRequired(true)),
+  )
+  .addSubcommand((subcommand) =>
     subcommand
       .setName('channel')
       .setDescription('Send notice to channel')
-      .addChannelOption(option =>
-        option
-          .setName('channel')
-          .setDescription('The channel you want to send notice to')
-          .setRequired(true))
-      .addAttachmentOption(option =>
-        option
-          .setName('json')
-          .setDescription('Message JSON File to send')
-          .setRequired(true)))
+      .addChannelOption((option) =>
+        option.setName('channel').setDescription('The channel you want to send notice to').setRequired(true),
+      )
+      .addAttachmentOption((option) =>
+        option.setName('json').setDescription('Message JSON File to send').setRequired(true),
+      ),
+  )
 
 /**
  * @param {ChatInputCommandInteraction} interaction
@@ -76,9 +65,10 @@ const execute = async (interaction) => {
         return
       }
 
-      const channel = type === 'channel'
-        ? interaction.options.getChannel('channel')
-        : await interaction.options.getUser('member').createDM()
+      const channel =
+        type === 'channel'
+          ? interaction.options.getChannel('channel')
+          : await interaction.options.getUser('member').createDM()
 
       if (channel === null || channel === undefined) {
         await interaction.editReply('Could not fetch channel')
