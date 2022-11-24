@@ -66,7 +66,7 @@ const execute = async (interaction) => {
   const partner = interaction.options.getMember('partner')
 
   await verifyAndLog(member, interaction.member, type)
-  if (partner === null || partner === undefined) {
+  if (partner !== null && partner !== undefined) {
     await verifyAndLog(partner, interaction.member, type)
   }
   await interaction.editReply(getAssets('success'))
