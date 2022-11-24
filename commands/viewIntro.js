@@ -29,7 +29,7 @@ const execute = async (interaction) => {
           {
             type: 2,
             style: 5,
-            label: 'View Full Intro',
+            label: 'Full Intro',
             url: intro.get('introUrl'),
           },
         ],
