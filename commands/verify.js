@@ -33,9 +33,8 @@ const builder = new SlashCommandBuilder()
 /**
  * @param {GuildMember} member
  */
-const verifyAndLog = async (member, moderator, type) => {
+const verifyAndLog = async (member, moderator, type, content) => {
   const message = {
-    content: verifyAssets(`message_content_${type}`, { id: member.id }),
     embeds: [
       {
         title: member.displayName,
@@ -48,6 +47,7 @@ const verifyAndLog = async (member, moderator, type) => {
       },
     ],
   }
+  if (content) message.content = verifyAssets(`message_content_${type}`, { id: member.id })
   await member.roles.add(keyv.get(`role_verified_${type}`))
   const channel = await member.client.channels.fetch(keyv.get(`channel_verified_${type}`))
   await channel?.send(message)
@@ -65,9 +65,9 @@ const execute = async (interaction) => {
   const member = interaction.options.getMember('member')
   const partner = interaction.options.getMember('partner')
 
-  await verifyAndLog(member, interaction.member, type)
+  await verifyAndLog(member, interaction.member, type, true)
   if (partner !== null && partner !== undefined) {
-    await verifyAndLog(partner, interaction.member, type)
+    await verifyAndLog(partner, interaction.member, type, false)
   }
   await interaction.editReply(getAssets('success'))
 }
