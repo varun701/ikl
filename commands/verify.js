@@ -27,7 +27,7 @@ const builder = new SlashCommandBuilder()
       .setName('couple')
       .setDescription('Give \'Couple\' role')
       .addUserOption((option) => option.setName('member').setDescription('The member').setRequired(true))
-      .addUserOption((option) => option.setName('partner').setDescription('The partner').setRequired(true)),
+      .addUserOption((option) => option.setName('partner').setDescription('The partner').setRequired(false)),
   )
 
 /**
@@ -59,14 +59,14 @@ const verifyAndLog = async (member, moderator, type) => {
  * @param {ChatInputCommandInteraction} interaction
  */
 const execute = async (interaction) => {
-  await interaction.deferReply({ ephemeral: true })
+  await interaction.deferReply()
 
   const type = interaction.options.getSubcommand()
   const member = interaction.options.getMember('member')
   const partner = interaction.options.getMember('partner')
 
   await verifyAndLog(member, interaction.member, type)
-  if (partner !== null && partner !== undefined) {
+  if (partner === null || partner === undefined) {
     await verifyAndLog(partner, interaction.member, type)
   }
   await interaction.editReply(getAssets('success'))
