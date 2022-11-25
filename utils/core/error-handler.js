@@ -18,6 +18,7 @@ export default function errorHandler() {
       }
       else if ('details' in error) {
         this.details = [...error.details, message]
+        this.trace = error.trace
       }
       else {
         this.details = [error.message, message]
