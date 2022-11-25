@@ -61,6 +61,11 @@ export async function profileCardGenerator(introObject, client) {
     await page.close()
     await browser.close()
     // return imgBuff
-    await introSender(client, introObject, imgBuff)
+    try {
+      await introSender(client, introObject, imgBuff)
+    }
+    catch (e) {
+      bot.error('Intro was not sent correctly', e)
+    }
   }, 7000)
 }

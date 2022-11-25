@@ -39,33 +39,34 @@ const getVerificationStatus = (verificationRoles) => {
 
 /**
  * Create Profile Data Object for Profile Creation/Change
- * @param {*} profileRoles
- * @param {*} profileDetails
- * @param {ModalSubmitInteraction} modalSubmit
+ * @param {introObject | {}} introObject
+ * @param {{}} profileRoles
+ * @param {{}} profileDetails
+ * @param {{}} modal
  * @returns {introObject}
  */
-const getIntroObject = (profileRoles, profileDetails, selected, modalSubmit) => {
-  const introObject = {}
-
+const getIntroObject = (introObject, profileRoles, profileDetails, selected, modal) => {
   // * Profile Card
   introObject.userID = profileDetails.userID
   introObject.userTag = profileDetails.userTag
   introObject.userName = profileDetails.userName
 
   // ASL
-  introObject.age = selected.age_value
+  introObject.age = selected.age_value ?? introObject.age
   introObject.sex = profileRoles.genderRole
-  const cityName = modalSubmit.fields.getTextInputValue('city_name')
+  const cityName = introObject.locationArray.length === 3
+    ? modal.cityName ?? introObject.locationArray[0]
+    : modal.cityName ?? ''
+  introObject.region = selected.location_value ?? introObject.region
   introObject.locationArray =
     cityName === ''
-      ? [selected.location_value, profileRoles.locationRole]
-      : [cityName, selected.location_value, profileRoles.locationRole]
+      ? [introObject.region, profileRoles.locationRole]
+      : [cityName, introObject.region, profileRoles.locationRole]
   introObject.location = introObject.locationArray[0]
-  introObject.region = selected.location_value
-  introObject.quote = modalSubmit.fields.getTextInputValue('quote')
+  introObject.quote = modal.quote ?? introObject.quote
 
   // Styling
-  introObject.theme = selected.theme_value
+  introObject.theme = selected.theme_value ?? introObject.theme
   introObject.color = profileDetails.color
   introObject.avatar = profileDetails.avatarURL
 
@@ -76,9 +77,9 @@ const getIntroObject = (profileRoles, profileDetails, selected, modalSubmit) => 
   introObject.verificationStatus = getVerificationStatus(profileRoles.verificationRoles)
 
   // * Intro Details
-  introObject.aboutMe = modalSubmit.fields.getTextInputValue('about_me')
-  introObject.interests = modalSubmit.fields.getTextInputValue('interests')
-  introObject.lookingFor = modalSubmit.fields.getTextInputValue('looking_for')
+  introObject.aboutMe = modal.aboutMe ?? introObject.aboutMe
+  introObject.interests = modal.interests ?? introObject.interests
+  introObject.lookingFor = modal.lookingFor ?? introObject.lookingFor
 
   // * Extra
   introObject.version = '1.0'
@@ -177,7 +178,38 @@ export async function introHandler(buttonInteraction) {
   }
 
   // todo edit and update options
-  await buttonInteraction.editReply(introAssets('not_available_yet'))
+  await buttonInteraction.editReply(introAssets('intro_actions_menu'))
+  const message = await buttonInteraction.fetchReply()
+
+  const collector = message.createMessageComponentCollector({
+    time: 30 * 1000,
+  })
+
+  collector.on('collect', async (collected) => {
+    let selected = {}, modal = {}
+    if (collected.customId === 'intro_update') {
+      await buttonInteraction.editReply(introAssets('success_update'))
+    }
+    if (collected.customId === 'intro_edit') {
+      // todo: edit options, and fetch new value
+    }
+    const intro_fetched = await Intro.findByPk(profileDetails.userID)
+    const introObject_fetched = intro_fetched.get('data')
+    console.log(introObject_fetched)
+    const introObject = getIntroObject(
+      introObject_fetched,
+      profileRoles,
+      profileDetails,
+      selected,
+      modal,
+    )
+    try {
+      await profileCardGenerator(introObject, buttonInteraction.client)
+    }
+    catch (e) {
+      bot.error('Inro not created.', e)
+    }
+  })
 }
 
 /**
@@ -267,17 +299,24 @@ async function newIntroCreation(buttonInteraction, profileRoles, profileDetails)
         await modalSubmit.update(introAssets('success'))
 
         const introObject = getIntroObject(
+          {},
           profileRoles,
           profileDetails,
           { age_value, theme_value, location_value },
-          modalSubmit,
+          {
+            quote: modalSubmit.fields.getTextInputValue('quote'),
+            aboutMe: modalSubmit.fields.getTextInputValue('about_me'),
+            cityName: modalSubmit.fields.getTextInputValue('city_name'),
+            interests: modalSubmit.fields.getTextInputValue('interests'),
+            lookingFor: modalSubmit.fields.getTextInputValue('looking_for'),
+          },
         )
 
         try {
           await profileCardGenerator(introObject, buttonInteraction.client)
         }
         catch (e) {
-          bot.error('Inro not created.', e)
+          bot.error('Intro not created.', e)
         }
       })
       return
@@ -324,18 +363,46 @@ export async function introSender(client, introObject, profileCardBuff) {
   introObject.profileCardUrl = profileCardUrl
 
   // Intro
+  let messageIntro = null
   const channelIdIntro =
     introObject.verificationStatus !== 'Unverified'
       ? keyv.get('channel_intro_verified')
       : keyv.get('channel_intro_unverified')
-  const channelIntro = await client.channels.fetch(channelIdIntro)
-  if (channelIntro === null) throw new logger.Error('Intro channel was not fetched.')
-  const messageIntro = await channelIntro.send({
+  const intro = {
     content: userMention(userID),
     embeds: embedsIntro,
     files: [profileCardUrl],
-  })
+  }
+
+  // If there is intro
+  if ('introUrl' in introObject) {
+    const introUrlArray = introObject['introUrl'].split('/')
+    const channel = await client.channels.fetch(channelIdIntro)
+    if (channel === null) throw new Error('Intro Channel was not fetched (Intro Edit).')
+    let message
+    try {
+      message = await channel.messages.fetch(introUrlArray[introUrlArray.length - 1])
+    }
+    catch (e) {
+      logger.error('Message not fetched')
+    }
+    if (message !== null && message !== undefined) {
+      if (channelIdIntro === introUrlArray[introUrlArray.length - 2]) {
+        messageIntro = await message.edit(intro)
+      }
+      else {
+        await message.delete()
+      }
+    }
+  }
+
+  if (messageIntro === null) {
+    const channelIntro = await client.channels.fetch(channelIdIntro)
+    if (channelIntro === null) throw new logger.Error('Intro Channel was not fetched.')
+    messageIntro = await channelIntro.send(intro)
+  }
   if (messageIntro === null) throw new logger.Error('Intro Message not sent.')
+  console.log(introObject)
   const introUrl = messageIntro.url
   introObject.introUrl = introUrl
 
