@@ -54,9 +54,8 @@ const getIntroObject = (introObject, profileRoles, profileDetails, selected, mod
   // ASL
   introObject.age = selected.age_value ?? introObject.age
   introObject.sex = profileRoles.genderRole
-  const cityName = introObject.locationArray.length === 3
-    ? modal.cityName ?? introObject.locationArray[0]
-    : modal.cityName ?? ''
+  const cityName =
+    introObject.locationArray.length === 3 ? modal.cityName ?? introObject.locationArray[0] : modal.cityName ?? ''
   introObject.region = selected.location_value ?? introObject.region
   introObject.locationArray =
     cityName === ''
@@ -177,7 +176,6 @@ export async function introHandler(buttonInteraction) {
     return
   }
 
-  // todo edit and update options
   await buttonInteraction.editReply(introAssets('intro_actions_menu'))
   const message = await buttonInteraction.fetchReply()
 
@@ -186,7 +184,8 @@ export async function introHandler(buttonInteraction) {
   })
 
   collector.on('collect', async (collected) => {
-    let selected = {}, modal = {}
+    const selected = {},
+      modal = {}
     if (collected.customId === 'intro_update') {
       await buttonInteraction.editReply(introAssets('success_update'))
     }
@@ -195,14 +194,7 @@ export async function introHandler(buttonInteraction) {
     }
     const intro_fetched = await Intro.findByPk(profileDetails.userID)
     const introObject_fetched = intro_fetched.get('data')
-    console.log(introObject_fetched)
-    const introObject = getIntroObject(
-      introObject_fetched,
-      profileRoles,
-      profileDetails,
-      selected,
-      modal,
-    )
+    const introObject = getIntroObject(introObject_fetched, profileRoles, profileDetails, selected, modal)
     try {
       await profileCardGenerator(introObject, buttonInteraction.client)
     }
@@ -402,7 +394,6 @@ export async function introSender(client, introObject, profileCardBuff) {
     messageIntro = await channelIntro.send(intro)
   }
   if (messageIntro === null) throw new logger.Error('Intro Message not sent.')
-  console.log(introObject)
   const introUrl = messageIntro.url
   introObject.introUrl = introUrl
 
