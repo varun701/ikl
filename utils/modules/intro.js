@@ -369,7 +369,7 @@ export async function introSender(client, introObject, profileCardBuff) {
   // If there is intro
   if ('introUrl' in introObject) {
     const introUrlArray = introObject['introUrl'].split('/')
-    const channel = await client.channels.fetch(channelIdIntro)
+    const channel = await client.channels.fetch(introUrlArray[introUrlArray.length - 2])
     if (channel === null) throw new Error('Intro Channel was not fetched (Intro Edit).')
     let message
     try {
