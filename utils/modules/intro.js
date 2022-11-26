@@ -72,7 +72,7 @@ const getIntroObject = (introObject, profileRoles, profileDetails, selected, mod
   // Details
   introObject.sexuality = profileRoles.sexualityRole
   introObject.dmStatus = profileRoles.dmStatusRole
-  introObject.warriorStatus = profileRoles.warriorRole
+  introObject.warriorStatus = profileRoles.warriorRole ?? 'human'
   introObject.verificationStatus = getVerificationStatus(profileRoles.verificationRoles)
 
   // * Intro Details
