@@ -54,8 +54,8 @@ const getIntroObject = (introObject, profileRoles, profileDetails, selected, mod
   // ASL
   introObject.age = selected.age_value ?? introObject.age
   introObject.sex = profileRoles.genderRole
-  const cityName =
-    introObject.locationArray.length === 3 ? modal.cityName ?? introObject.locationArray[0] : modal.cityName ?? ''
+  let cityName = modal.cityName ?? null
+  cityName = cityName === null ? (introObject.locationArray.length === 3 ? introObject.locationArray[0] : '') : cityName
   introObject.region = selected.location_value ?? introObject.region
   introObject.locationArray =
     cityName === ''
