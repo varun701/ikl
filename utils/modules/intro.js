@@ -45,7 +45,7 @@ const getVerificationStatus = (verificationRoles) => {
  * @param {{}} modal
  * @returns {introObject}
  */
-const getIntroObject = (introObject, profileRoles, profileDetails, selected, modal) => {
+export const getIntroObject = (introObject, profileRoles, profileDetails, selected, modal) => {
   // * Profile Card
   introObject.userID = profileDetails.userID
   introObject.userTag = profileDetails.userTag
@@ -53,16 +53,13 @@ const getIntroObject = (introObject, profileRoles, profileDetails, selected, mod
 
   // ASL
   introObject.age = selected.age_value ?? introObject.age
-  introObject.sex = profileRoles.genderRole
-  let cityName = modal.cityName ?? null
-  cityName = cityName === null ? (introObject.locationArray.length === 3 ? introObject.locationArray[0] : '') : cityName
+  introObject.sex = profileRoles.genderRole ?? introObject.sex
+  introObject.zone = profileRoles.locationRole ?? introObject.zone ?? 'Abroad'
   introObject.region = selected.location_value ?? introObject.region
-  introObject.locationArray =
-    cityName === ''
-      ? [introObject.region, profileRoles.locationRole]
-      : [cityName, introObject.region, profileRoles.locationRole]
+  introObject.cityName = modal.cityName ?? introObject.cityName ?? ''
   introObject.location = introObject.locationArray[0]
   introObject.quote = modal.quote ?? introObject.quote
+  if ('locationArray' in introObject) delete introObject.locationArray
 
   // Styling
   introObject.theme = selected.theme_value ?? introObject.theme
@@ -70,9 +67,9 @@ const getIntroObject = (introObject, profileRoles, profileDetails, selected, mod
   introObject.avatar = profileDetails.avatarURL
 
   // Details
-  introObject.sexuality = profileRoles.sexualityRole
-  introObject.dmStatus = profileRoles.dmStatusRole
-  introObject.warriorStatus = profileRoles.warriorRole ?? 'human'
+  introObject.sexuality = profileRoles.sexualityRole ?? introObject.sexuality
+  introObject.dmStatus = profileRoles.dmStatusRole ?? introObject.dmStatus
+  introObject.warriorStatus = profileRoles.warriorRole ?? introObject.warriorStatus ?? 'human'
   introObject.verificationStatus = getVerificationStatus(profileRoles.verificationRoles)
 
   // * Intro Details
@@ -81,7 +78,7 @@ const getIntroObject = (introObject, profileRoles, profileDetails, selected, mod
   introObject.lookingFor = modal.lookingFor ?? introObject.lookingFor
 
   // * Extra
-  introObject.version = '1.0'
+  introObject.version = '1.1'
   return introObject
 }
 
@@ -138,7 +135,7 @@ export const getProfileRoles = (member) => {
  * Generate Profile Details Object for Guildember
  * @param {GuildMember} member
  */
-const getProfileDetails = (member) => {
+export const getProfileDetails = (member) => {
   return {
     userID: member.id,
     avatarURL: member.displayAvatarURL(),
@@ -199,7 +196,7 @@ export async function introHandler(buttonInteraction) {
       await profileCardGenerator(introObject, buttonInteraction.client)
     }
     catch (e) {
-      bot.error('Inro not created.', e)
+      bot.error('Intro not created.', e)
     }
   })
 }
