@@ -57,7 +57,7 @@ export const getIntroObject = (introObject, profileRoles, profileDetails, select
   introObject.zone = profileRoles.locationRole ?? introObject.zone ?? 'Abroad'
   introObject.region = selected.location_value ?? introObject.region
   introObject.cityName = modal.cityName ?? introObject.cityName ?? ''
-  introObject.location = introObject.locationArray[0]
+  introObject.location = introObject.cityName === '' ? introObject.region : introObject.cityName
   introObject.quote = modal.quote ?? introObject.quote
   if ('locationArray' in introObject) delete introObject.locationArray
 
