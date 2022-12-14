@@ -181,24 +181,45 @@ export async function introHandler(buttonInteraction) {
   })
 
   collector.on('collect', async (collected) => {
-    const selected = {},
-      modal = {}
+    await buttonInteraction.editReply(introAssets('success_update'))
     if (collected.customId === 'intro_update') {
-      await buttonInteraction.editReply(introAssets('success_update'))
+      await introUpdater(buttonInteraction.client, profileRoles, profileDetails, {}, {})
     }
     if (collected.customId === 'intro_edit') {
       // todo: edit options, and fetch new value
-    }
-    const intro_fetched = await Intro.findByPk(profileDetails.userID)
-    const introObject_fetched = intro_fetched.get('data')
-    const introObject = getIntroObject(introObject_fetched, profileRoles, profileDetails, selected, modal)
-    try {
-      await profileCardGenerator(introObject, buttonInteraction.client)
-    }
-    catch (e) {
-      bot.error('Intro not created.', e)
+      const selected = {},
+        modal = {}
+      // todo: show edit menu and get edited values
+
+      // await introUpdater(buttonInteraction.client, profileRoles, profileDetails, {}, {})
     }
   })
+}
+
+export async function introUpdater(client, profileRoles, profileDetails, selected, modal) {
+  const intro_fetched = await Intro.findByPk(profileDetails.userID)
+  const introObject_fetched = intro_fetched?.get('data') ?? {}
+  const introObject = getIntroObject(introObject_fetched, profileRoles, profileDetails, selected, modal)
+  try {
+    await profileCardGenerator(introObject, client)
+  }
+  catch (e) {
+    bot.error('Intro not created.', e)
+  }
+}
+
+export async function introUpdater_byMember(client, member) {
+  const profileRoles = getProfileRoles(member)
+  const profileDetails = getProfileDetails(member)
+  const intro_fetched = await Intro.findByPk(profileDetails.userID)
+  const introObject_fetched = intro_fetched?.get('data') ?? {}
+  const introObject = getIntroObject(introObject_fetched, profileRoles, profileDetails, {}, {})
+  try {
+    await profileCardGenerator(introObject, client)
+  }
+  catch (e) {
+    bot.error('Intro not created.', e)
+  }
 }
 
 /**
