@@ -18,18 +18,18 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@keyv/sqlite": "^3.5.3",
+    "@keyv/sqlite": "^3.6.3",
     "common-tags": "^1.8.2",
-    "discord.js": "^14.3.0",
-    "dotenv": "^16.0.1",
-    "keyv": "^4.4.1",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "keyv": "^4.5.2",
     "lodash": "^4.17.21",
-    "pino": "^8.5.0",
-    "pino-pretty": "^9.1.0",
-    "puppeteer": "^18.0.5",
-    "sequelize": "^6.21.4",
-    "sonic-boom": "^3.2.0",
-    "sqlite3": "^5.0.11"
+    "pino": "^8.7.0",
+    "pino-pretty": "^9.1.1",
+    "puppeteer": "^19.4.0",
+    "sequelize": "^6.26.0",
+    "sonic-boom": "^3.2.1",
+    "sqlite3": "^5.1.2"
   },
   "repository": {
     "type": "git",
@@ -41,6 +41,6 @@
   "homepage": "https://github.com/varun701/ikl#readme",
   "devDependencies": {
     "@types/dateformat": "^5.0.0",
-    "@types/lodash": "^4.14.187"
+    "@types/lodash": "^4.14.191"
   }
 }
